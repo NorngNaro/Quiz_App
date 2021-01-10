@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "535834198835",
+    "firebase_url": "https://quizprogramming-d9a73-default-rtdb.firebaseio.com",
+    "project_id": "quizprogramming-d9a73",
+    "storage_bucket": "quizprogramming-d9a73.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:535834198835:android:a8c78f6b979cd701a4f446",
+        "android_client_info": {
+          "package_name": "com.Complete.quizprogramming"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "535834198835-6eoeke21p1bb7pate11qalppt918llib.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4h-tCOPVh8dlRiZQSnJNb6kdUzEhSfo4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "535834198835-6eoeke21p1bb7pate11qalppt918llib.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

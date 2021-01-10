@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <item android:title="">
+                <menu>
+                        <item android:title="Profile"
+                            android:id="@+id/profile"
+                            android:icon="@drawable/ic_account_circle_black_24dp" />
+                        <item android:title="Settings"
+                            android:id="@+id/setting"
+                            android:icon="@drawable/ic_baseline_settings_applications_24" />
+                        <item android:title="Best Player"
+                            android:icon="@drawable/ic_baseline_emoji_events_24" />
+                        <item android:title="Help"
+                            android:icon="@drawable/ic_baseline_help_24" />
+                        <item android:title="About"
+                            android:icon="@drawable/ic_baseline_device_unknown_24" />
+                </menu>
+        </item>
+
+        <item android:title="">
+                <menu>
+                        <item android:title="Log Out"
+                            android:id="@+id/log_out"
+                            android:icon="@drawable/ic_baseline_power_settings_new_24" />
+                </menu>
+        </item>
+
+</menu>

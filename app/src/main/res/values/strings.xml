@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Quiz Programming</string>
+    <string name="username_hint">Username</string>
+    <string name="input_username_hint">Create Username</string>
+    <string name="password_hint">Password</string>
+    <string name="create_password_hint">Create Password</string>
+    <string name="re_password_hint">Retype Password</string>
+    <string name="sign_in">Sign In to Continue</string>
+    <string name="sign_up">Sign Up to Continue</string>
+    <string name="new_here">Not registered ?</string>
+    <string name="create_acc">Sign Up</string>
+
+
+    <string name="openNavDrawer">Navigation Drawer Open</string>
+    <string name="closeNavDrawer">Navigation Drawer Close</string>
+</resources>
