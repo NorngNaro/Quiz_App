@@ -2,8 +2,11 @@ package com.Complete.quizprogramming;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -21,6 +24,7 @@ public class SignUp extends AppCompatActivity {
     public final String USER_INFO = "user_info";
     public final String USERNAME = "username";
     public final String PASSWORD = "password";
+    public final String ID = "id";
     public final String IN_OUT = "in_out";
 
 
@@ -33,6 +37,7 @@ public class SignUp extends AppCompatActivity {
     private Boolean isPressed = false;
     private Boolean isPressed_repass = false;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,19 +62,19 @@ public class SignUp extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // For check internet connection
+                ConnectivityManager conMgr =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+                if (netInfo == null){
+                    Toast.makeText(SignUp.this, "Please check internet connection!", Toast.LENGTH_LONG).show();
+                }
                 sign();
 
             }
         });
 
-
-
-
-
     }
-
-
-
 
     // Method for save data user to share preference
 
@@ -81,11 +86,11 @@ public class SignUp extends AppCompatActivity {
         editor.putString( USERNAME, txt_username.getText().toString());
         editor.putString( PASSWORD, txt_password.getText().toString());
         editor.putBoolean(IN_OUT,true);
+
         editor.apply();
 
         Toast.makeText(this, "Log in", Toast.LENGTH_SHORT).show();
     }
-
 
     // Method for sign up
 
@@ -106,13 +111,19 @@ public class SignUp extends AppCompatActivity {
         else if(txt_username.getText().toString().length() != 0) {
             if (txt_password.getText().toString().equals(txt_re_password.getText().toString())) {
 
-                saveData();
-
                 DatabaseReference ref = database.getReference("user");
-                String randomID =ref.push().getKey();
-                ref.child(randomID).child("username").setValue(txt_username.getText().toString());
-                ref.child(randomID).child("password").setValue(txt_password.getText().toString());
+                String ID = "id_" + txt_username.getText().toString();
 
+                ref.child(ID).child("username").setValue(txt_username.getText().toString());
+                ref.child(ID).child("password").setValue(txt_password.getText().toString());
+                ref.child(ID).child("score").child("correctAns").setValue("0");
+                ref.child(ID).child("score").child("incorrectAns").setValue("0");
+                ref.child(ID).child("score").child("totalQuiz").setValue("0");
+                ref.child(ID).child("score").child("totalScore").setValue("0");
+                ref.child(ID).child("level").child("c_program").setValue("0");
+                ref.child(ID).child("level").child("c_plus_program").setValue("0");
+                ref.child(ID).child("level").child("java_program").setValue("0");
+                saveData();
                 Intent i = new Intent(SignUp.this, Quiz.class);
                 startActivity(i);
 
@@ -151,7 +162,6 @@ public class SignUp extends AppCompatActivity {
         hide2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 if (isPressed_repass == true) {
                     hide2.setImageResource(R.drawable.ic_visibility_off_black_24dp);

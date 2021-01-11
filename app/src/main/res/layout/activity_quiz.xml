@@ -67,7 +67,7 @@
                                     android:orientation="vertical"
                                     android:gravity="center"
                                     android:layout_marginTop="10dp"
-                                    android:layout_marginBottom="10dp"
+                                    android:layout_marginBottom="25dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp">
 
@@ -87,32 +87,7 @@
                                         android:textColor="@color/colorBlack"
                                         android:textSize="18dp"/>
 
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:weightSum="3">
 
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="Progress"
-                                            android:textSize="17dp"/>
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginLeft="5dp"
-                                            android:text="0"
-                                            android:textSize="17dp"/>
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="/20"
-                                            android:textSize="17dp"/>
-
-                                    </LinearLayout>
 
                                 </LinearLayout>
 
@@ -154,32 +129,7 @@
                                         android:textColor="@color/colorBlack"
                                         android:textSize="18dp"/>
 
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:weightSum="3">
 
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="Progress"
-                                            android:textSize="17dp"/>
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginLeft="5dp"
-                                            android:text="0"
-                                            android:textSize="17dp"/>
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="/20"
-                                            android:textSize="17dp"/>
-
-                                    </LinearLayout>
 
                                 </LinearLayout>
 
@@ -212,7 +162,7 @@
                                     android:orientation="vertical"
                                     android:gravity="center"
                                     android:layout_marginTop="10dp"
-                                    android:layout_marginBottom="10dp"
+                                    android:layout_marginBottom="25dp"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp">
 
@@ -231,32 +181,7 @@
                                         android:textColor="@color/colorBlack"
                                         android:textSize="17dp"/>
 
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:weightSum="3">
 
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="Progress"
-                                            android:textSize="17dp"/>
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginLeft="5dp"
-                                            android:text="0"
-                                            android:textSize="17dp"/>
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="/20"
-                                            android:textSize="17dp"/>
-
-                                    </LinearLayout>
 
                                 </LinearLayout>
 
@@ -299,32 +224,7 @@
                                         android:textColor="@color/colorBlack"
                                         android:textSize="18dp"/>
 
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:weightSum="3">
 
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="Progress"
-                                            android:textSize="17dp"/>
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginLeft="5dp"
-                                            android:text="0"
-                                            android:textSize="17dp"/>
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="/20"
-                                            android:textSize="17dp"/>
-
-                                    </LinearLayout>
 
                                 </LinearLayout>
 

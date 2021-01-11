@@ -87,15 +87,18 @@ public class SignIn extends AppCompatActivity {
                                 user_name = zoneSnapshot.child("username").getValue(String.class);
                                 pass_word = zoneSnapshot.child("password").getValue(String.class);
 
+
                                 if (username.getText().toString().equals(user_name)) {
                                     break;
                                 }
                             }
                             if (password.getText().toString().equals(pass_word)) {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString( "username", username.getText().toString());
+                                editor.putString( "password", password.getText().toString());
                                 editor.putBoolean("in_out",true);
                                 editor.apply();
-                                Log.e( "test", "onDataChange:next screen "+pass_word);
+
                                 Intent i = new Intent(SignIn.this , Quiz.class);
                                 startActivity(i);
 

@@ -36,6 +36,7 @@ public class Quiz extends AppCompatActivity implements NavigationView.OnNavigati
     private CardView c_Program;
     boolean doubleBackToExitPressedOnce = false;
     private static final String TAG = "MyActivity";
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

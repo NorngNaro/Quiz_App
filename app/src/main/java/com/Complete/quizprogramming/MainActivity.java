@@ -25,9 +25,6 @@ public class MainActivity extends AppCompatActivity {
         process = findViewById(R.id.loadingbar);
 
 
-
-
-
         new CountDownTimer(1380, 10){
             public void onTick(long millisUntilFinished){
                 process.setProgress(counter);
