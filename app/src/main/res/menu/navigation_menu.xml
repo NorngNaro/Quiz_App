@@ -12,8 +12,10 @@
                         <item android:title="Best Player"
                             android:icon="@drawable/ic_baseline_emoji_events_24" />
                         <item android:title="Help"
+                            android:id="@+id/help"
                             android:icon="@drawable/ic_baseline_help_24" />
                         <item android:title="About"
+                            android:id="@+id/about"
                             android:icon="@drawable/ic_baseline_device_unknown_24" />
                 </menu>
         </item>

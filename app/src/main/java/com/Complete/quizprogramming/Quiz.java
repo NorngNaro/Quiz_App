@@ -103,6 +103,10 @@ public class Quiz extends AppCompatActivity implements NavigationView.OnNavigati
             drawerLayout.closeDrawers();
             Intent intent = new Intent(Quiz.this,Profile.class);
             startActivity(intent);
+        }else if(id==R.id.about){
+            drawerLayout.closeDrawers();
+            Intent intent = new Intent(Quiz.this,About.class);
+            startActivity(intent);
         }
         return true;
     }
