@@ -11,9 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".About"></activity>
-        <activity android:name=".Level" />
+        <activity android:name=".BestPlayer"></activity>
         <activity android:name=".Quiz" />
+        <activity android:name=".About" />
+        <activity android:name=".Level" />
+        <activity android:name=".Home" />
         <activity android:name=".Setting" />
         <activity android:name=".SignIn" />
         <activity android:name=".SignUp" />
@@ -24,7 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Profile"></activity>
+        <activity android:name=".Profile" />
     </application>
 
 </manifest>

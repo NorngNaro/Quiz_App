@@ -9,12 +9,6 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.widget.ProgressBar;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 public class MainActivity extends AppCompatActivity {
     private ProgressBar process;
     int counter=0;
@@ -25,12 +19,13 @@ public class MainActivity extends AppCompatActivity {
         process = findViewById(R.id.loadingbar);
 
 
-        new CountDownTimer(1380, 10){
+        new CountDownTimer(1000, 5){
             public void onTick(long millisUntilFinished){
                 process.setProgress(counter);
                 counter++;
             }
             public  void onFinish(){
+                process.setProgress(100);
                 SignUp signUp = new SignUp();
                 SharedPreferences sharedPreferences = getSharedPreferences(signUp.USER_INFO,MODE_PRIVATE);
                 boolean log =sharedPreferences.getBoolean(signUp.IN_OUT,false);
@@ -39,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }else{
-                    Intent intent = new Intent(MainActivity.this, Quiz.class);
+                    Intent intent = new Intent(MainActivity.this, Home.class);
                     startActivity(intent);
                     finish();
                 }

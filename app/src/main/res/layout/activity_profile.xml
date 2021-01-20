@@ -62,7 +62,7 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_weight="1"
-                            android:src="@drawable/ic_account_circle_black_24dp"
+                            android:src="@drawable/ic_baseline_account_box_24"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -412,5 +412,12 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="150dp"
+        android:background="@color/Background" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,156 +1,304 @@
 package com.Complete.quizprogramming;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
-import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.google.android.material.navigation.NavigationView;
+import com.Complete.quizprogramming.databinding.ActivityQuizBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-public class Quiz extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private Toolbar toolbar;
+public class Quiz extends AppCompatActivity {
 
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-    private CardView c_Program;
-    boolean doubleBackToExitPressedOnce = false;
-    private static final String TAG = "MyActivity";
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    ActivityQuizBinding binding;
+    int btn_color, time, score, incorrect, quiz_range;
+    String right_ans;
+    String level;
+    String program;
+    String id;
+    int totalQuiz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quiz);
+        binding = ActivityQuizBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
-        toolbar = findViewById(R.id.main_toolbar);
-        setSupportActionBar(toolbar);
-
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        c_Program = findViewById(R.id.btn_C_program);
-
-
+        // Get username from cache to find id
+        SignUp signUp = new SignUp();
+        SharedPreferences sharedPreferences = getSharedPreferences(signUp.USER_INFO, MODE_PRIVATE);
+        id = "id_" + sharedPreferences.getString(signUp.USERNAME, null);
 
 
-        c_Program.setOnClickListener(new View.OnClickListener() {
+        // set color
+        btn_color = getColor(R.color.BasicColor);
+        set_color();
+
+
+        // receive datafrom level screen by put String
+        Intent intent = getIntent();
+        program = intent.getStringExtra("program");
+        level = intent.getStringExtra("level_click");
+
+
+        quiz_level();
+        quiz();
+
+
+        binding.btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnNext_click();
+            }
+        });
 
-                Log.e(TAG, "onClick: click" );
-                Intent intent = new Intent(Quiz.this, Level.class);
-                startActivity(intent);
+        binding.backQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        binding.answer1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                block_btnAns();
+                if (binding.txtAns1.getText().equals(right_ans)) {
+                    binding.answer1.setCardBackgroundColor(getColor(R.color.true_color));
+                    sum_Score();
+                } else {
+                    binding.answer1.setCardBackgroundColor(getColor(R.color.wrong_color));
+                    sum_incorrect();
+                }
+                check_ans();
+            }
+        });
+
+        binding.answer2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                block_btnAns();
+                if (binding.txtAns2.getText().equals(right_ans)) {
+                    binding.answer2.setCardBackgroundColor(getColor(R.color.true_color));
+                    sum_Score();
+                } else {
+                    binding.answer2.setCardBackgroundColor(getColor(R.color.wrong_color));
+                    sum_incorrect();
+                }
+                check_ans();
+            }
+        });
+
+        binding.answer3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                block_btnAns();
+                if (binding.txtAns3.getText().equals(right_ans)) {
+                    binding.answer3.setCardBackgroundColor(getColor(R.color.true_color));
+                    sum_Score();
+                } else {
+                    binding.answer3.setCardBackgroundColor(getColor(R.color.wrong_color));
+                    sum_incorrect();
+                }
+                check_ans();
+            }
+        });
+
+        binding.answer4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                block_btnAns();
+                if (binding.txtAns4.getText().equals(right_ans)) {
+                    binding.answer4.setCardBackgroundColor(getColor(R.color.true_color));
+                    sum_Score();
+                } else {
+                    binding.answer4.setCardBackgroundColor(getColor(R.color.wrong_color));
+                    sum_incorrect();
+                }
+                check_ans();
             }
         });
 
 
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
-                this,
-                drawerLayout,
-                toolbar,
-                R.string.openNavDrawer,
-                R.string.closeNavDrawer
-        );
+    }
 
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
+    // set color to btnAns
+    private void set_color(){
+        binding.answer1.setCardBackgroundColor(btn_color);
+        binding.answer2.setCardBackgroundColor(btn_color);
+        binding.answer3.setCardBackgroundColor(btn_color);
+        binding.answer4.setCardBackgroundColor(btn_color);
+    }
+
+    // for block btn Answers
+    private void block_btnAns(){
+        binding.btnNext.setVisibility(View.VISIBLE);
+        binding.answer1.setEnabled(false);
+        binding.answer2.setEnabled(false);
+        binding.answer3.setEnabled(false);
+        binding.answer4.setEnabled(false);
+    }
+    // for block btn Answers
+    private void unblock_btnAns(){
+        binding.btnNext.setVisibility(View.GONE);
+        binding.answer1.setEnabled(true);
+        binding.answer2.setEnabled(true);
+        binding.answer3.setEnabled(true);
+        binding.answer4.setEnabled(true);
+    }
+
+    // show btn ans
+    private void show_btnAns(){
+        binding.answer1.setVisibility(View.VISIBLE);
+        binding.answer2.setVisibility(View.VISIBLE);
+        binding.answer3.setVisibility(View.VISIBLE);
+        binding.answer4.setVisibility(View.VISIBLE);
+    }
+
+    // btn next click
+    private void btnNext_click() {
+        if(quiz_range == 3){
+
+
+
+        }else {
+            sum_quiz();
+            sum_total_quiz();
+            quiz_level();
+            quiz();
+            Log.e("BUG", "btnNext_click: quiz Range"+quiz_range );
+            unblock_btnAns();
+            show_btnAns();
+            set_color();
+            binding.btnNext.setVisibility(View.GONE);
+        }
+
+    }
+
+    // For checking answer that user have click
+    private void check_ans() {
+        if (binding.txtAns1.getText().equals(right_ans)) {
+            binding.answer1.setCardBackgroundColor(getColor(R.color.true_color));
+            block_btn();
+
+        } else if (binding.txtAns2.getText().equals(right_ans)) {
+            binding.answer2.setCardBackgroundColor(getColor(R.color.true_color));
+            block_btn();
+
+        } else if (binding.txtAns3.getText().equals(right_ans)) {
+            binding.answer3.setCardBackgroundColor(getColor(R.color.true_color));
+            block_btn();
+
+        } else if (binding.txtAns4.getText().equals(right_ans)) {
+            binding.answer4.setCardBackgroundColor(getColor(R.color.true_color));
+            block_btn();
+
+        }
+
+    }
+
+    // For invisible btn
+    private void block_btn() {
+
+        if (binding.answer1.getCardBackgroundColor().getDefaultColor() == getColor(R.color.BasicColor)) {
+            binding.answer1.setVisibility(View.GONE);
+        }
+        if (binding.answer2.getCardBackgroundColor().getDefaultColor() == getColor(R.color.BasicColor)) {
+            binding.answer2.setVisibility(View.GONE);
+        }
+        if (binding.answer3.getCardBackgroundColor().getDefaultColor() == getColor(R.color.BasicColor)) {
+            binding.answer3.setVisibility(View.GONE);
+        }
+        if (binding.answer4.getCardBackgroundColor().getDefaultColor() == getColor(R.color.BasicColor)) {
+            binding.answer4.setVisibility(View.GONE);
+        }
     }
 
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
+    // get complete quiz from database
+    private void quiz_level() {
 
-        if (id == R.id.log_out) {
-            drawerLayout.closeDrawers();
-            // for insert login to false
-            SignUp signUp = new SignUp();
-            SharedPreferences sharedPreferences = getSharedPreferences(signUp.USER_INFO, MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("in_out",false);
-            editor.apply();
-            Toast.makeText(this, "Log out", Toast.LENGTH_SHORT).show();
-            // Open screen sign in
-            Intent intent = new Intent(this,SignIn.class);
-            startActivity(intent);
-            finish();
-        }else if(id==R.id.setting){
-            drawerLayout.closeDrawers();
-            Intent intent = new Intent(this,Setting.class);
-            startActivity(intent);
-        }else if(id==R.id.profile){
-            drawerLayout.closeDrawers();
-            Intent intent = new Intent(Quiz.this,Profile.class);
-            startActivity(intent);
-        }else if(id==R.id.about){
-            drawerLayout.closeDrawers();
-            Intent intent = new Intent(Quiz.this,About.class);
-            startActivity(intent);
-        }
-        return true;
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
-        }
-
-        this.doubleBackToExitPressedOnce = true;
-        exit();
-
-        new Handler().postDelayed(new Runnable() {
+        Query ref = database.getReference("user").child(id);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                quiz_range = Integer.parseInt(dataSnapshot.child("program").child(program).child(level).getValue(String.class)) + 1;
+                binding.txtCountQuiz.setText(quiz_range + "/10");
+                score = Integer.parseInt(dataSnapshot.child("totalScore").getValue(String.class));
+                binding.txtTime.setText("Score: " + score);
+                incorrect = Integer.parseInt(dataSnapshot.child("incorrectAns").getValue(String.class));
+                totalQuiz = Integer.parseInt(dataSnapshot.child("totalQuiz").getValue(String.class));
+            }
 
             @Override
-            public void run() {
-                doubleBackToExitPressedOnce=false;
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
-        }, 2000);
+        });
     }
 
-
-    private void exit(){
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Exit")
-                .setMessage("Do you want to exit?")
-                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // TODO
-                    }
-                });
-                 AlertDialog alertDialog = builder.create();
-                 alertDialog.show();
+    // For sum Score
+    private void sum_Score() {
+        score = score + 1;
+        binding.txtTime.setText("Score: "+score);
+        String addScore = String.valueOf(score);
+        DatabaseReference ref = database.getReference("user").child(id);
+        ref.child("totalScore").setValue(addScore);
+    }
+    // For sum quiz
+    private void sum_quiz() {
+        String addQuiz = String.valueOf(quiz_range);
+        binding.txtCountQuiz.setText(quiz_range+"/10");
+        DatabaseReference ref = database.getReference("user").child(id).child("program").child(program);
+        ref.child(level).setValue(addQuiz);
+        Log.e("Level", "sum_quiz: level"+level );
     }
 
+    // For sum incorrect
+    private void sum_incorrect() {
+        String add_incorrect = String.valueOf(quiz_range);
+        DatabaseReference ref = database.getReference("user").child(id);
+        ref.child("incorrectAns").setValue(add_incorrect);
+    }
+
+    // For sum total Quiz
+    private void sum_total_quiz() {
+        totalQuiz = totalQuiz + 1;
+        String add_totalQuiz = String.valueOf(quiz_range);
+        DatabaseReference ref = database.getReference("user").child(id);
+        ref.child("totalQuiz").setValue(add_totalQuiz);
+    }
+
+    // Get data from database and set to view
+    private void quiz(){
+        Query ref = database.getReference("all_quiz").child(program).child(level);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                right_ans = dataSnapshot.child("quiz"+quiz_range).child("right_ans").getValue(String.class);
+                binding.txtQuiz.setText(dataSnapshot.child("quiz"+quiz_range).child("quiz").getValue(String.class));
+                binding.txtAns1.setText(dataSnapshot.child("quiz"+quiz_range).child("wrong_ans1").getValue(String.class));
+                binding.txtAns2.setText(dataSnapshot.child("quiz"+quiz_range).child("wrong_ans2").getValue(String.class));
+                binding.txtAns3.setText(dataSnapshot.child("quiz"+quiz_range).child("wrong_ans3").getValue(String.class));
+                binding.txtAns4.setText(dataSnapshot.child("quiz"+quiz_range).child("wrong_ans4").getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    
 }
-

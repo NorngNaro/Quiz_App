@@ -43,7 +43,7 @@
                 <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="5dp"
+                app:cardCornerRadius="2dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp">
@@ -54,11 +54,12 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <ImageView
+                        android:id="@+id/image_level1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="2"
                         android:layout_marginStart="20dp"
-                        android:src="@drawable/ic_baseline_lock_open_24"
+                        android:src="@drawable/ic_baseline_lock_24"
                         android:tint="@color/colorBlack"
                         android:scaleType="fitCenter"/>
                     <LinearLayout
@@ -68,37 +69,42 @@
                         android:weightSum="2"
                         android:orientation="vertical">
                         <TextView
+                            android:id="@+id/txt_level1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:layout_marginEnd="30dp"
-                            android:layout_marginStart="40dp"
+                            android:layout_marginStart="20dp"
                             android:text="@string/level_1"
                             android:textSize="24sp"
                             android:paddingStart="20dp"/>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginEnd="30dp"
-                            android:layout_marginStart="40dp"
+                            android:layout_marginStart="20dp"
                             android:layout_weight="1"
                             android:orientation="horizontal">
                             <TextView
+                                android:id="@+id/txt_lock1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="@string/unlocked"
-                                android:textSize="18sp"
+                                android:text="@string/lock"
+                                android:gravity="center|left"
+                                android:textSize="15sp"
                                 android:paddingStart="20dp"/>
                         </LinearLayout>
 
                     </LinearLayout>
                     <Button
+                        android:id="@+id/btn_level1"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/play"
+                        android:enabled="false"
+                        android:textAllCaps="false"
                         android:textColor="@color/Background"
-                        android:layout_marginEnd="5dp"
-                        android:backgroundTint="@color/BasicColor"/>
+                        android:layout_margin="5dp"
+                        android:background="@color/colorGray"/>
                 </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -106,7 +112,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="5dp"
+                    app:cardCornerRadius="2dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp">
@@ -117,11 +123,12 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <ImageView
+                            android:id="@+id/image_level2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:layout_marginStart="20dp"
-                            android:src="@drawable/ic_baseline_lock_open_24"
+                            android:src="@drawable/ic_baseline_lock_24"
                             android:tint="@color/colorBlack"
                             android:scaleType="fitCenter"/>
                         <LinearLayout
@@ -131,11 +138,12 @@
                             android:weightSum="2"
                             android:orientation="vertical">
                             <TextView
+                                android:id="@+id/txt_level2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:layout_marginEnd="30dp"
-                                android:layout_marginStart="40dp"
+                                android:layout_marginStart="20dp"
                                 android:text="@string/level_2"
                                 android:textSize="24sp"
                                 android:paddingStart="20dp"/>
@@ -143,25 +151,30 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginEnd="30dp"
-                                android:layout_marginStart="40dp"
+                                android:layout_marginStart="20dp"
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
                                 <TextView
+                                    android:id="@+id/txt_lock2"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:text="@string/unlocked"
-                                    android:textSize="18sp"
+                                    android:text="@string/lock"
+                                    android:gravity="center|left"
+                                    android:textSize="15sp"
                                     android:paddingStart="20dp"/>
                             </LinearLayout>
 
                         </LinearLayout>
                         <Button
+                            android:id="@+id/btn_level2"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="@string/play"
+                            android:enabled="false"
+                            android:textAllCaps="false"
                             android:textColor="@color/Background"
-                            android:layout_marginEnd="5dp"
-                            android:backgroundTint="@color/BasicColor"/>
+                            android:layout_margin="5dp"
+                            android:background="@color/colorGray"/>
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -169,7 +182,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="5dp"
+                    app:cardCornerRadius="2dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp">
@@ -180,11 +193,12 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <ImageView
+                            android:id="@+id/image_level3"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:layout_marginStart="20dp"
-                            android:src="@drawable/ic_baseline_lock_open_24"
+                            android:src="@drawable/ic_baseline_lock_24"
                             android:tint="@color/colorBlack"
                             android:scaleType="fitCenter"/>
                         <LinearLayout
@@ -194,11 +208,12 @@
                             android:weightSum="2"
                             android:orientation="vertical">
                             <TextView
+                                android:id="@+id/txt_level3"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:layout_marginEnd="30dp"
-                                android:layout_marginStart="40dp"
+                                android:layout_marginStart="20dp"
                                 android:text="@string/level_3"
                                 android:textSize="24sp"
                                 android:paddingStart="20dp"/>
@@ -206,25 +221,30 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginEnd="30dp"
-                                android:layout_marginStart="40dp"
+                                android:layout_marginStart="20dp"
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
                                 <TextView
+                                    android:id="@+id/txt_lock3"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:text="@string/unlocked"
-                                    android:textSize="18sp"
+                                    android:text="@string/lock"
+                                    android:gravity="center|left"
+                                    android:textSize="15sp"
                                     android:paddingStart="20dp"/>
                             </LinearLayout>
 
                         </LinearLayout>
                         <Button
+                            android:id="@+id/btn_level3"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="@string/play"
+                            android:enabled="false"
                             android:textColor="@color/Background"
-                            android:layout_marginEnd="5dp"
-                            android:backgroundTint="@color/BasicColor"/>
+                            android:layout_margin="5dp"
+                            android:textAllCaps="false"
+                            android:background="@color/colorGray"/>
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -232,7 +252,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="5dp"
+                    app:cardCornerRadius="2dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp">
@@ -243,11 +263,12 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <ImageView
+                            android:id="@+id/image_level4"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:layout_marginStart="20dp"
-                            android:src="@drawable/ic_baseline_lock_open_24"
+                            android:src="@drawable/ic_baseline_lock_24"
                             android:tint="@color/colorBlack"
                             android:scaleType="fitCenter"/>
                         <LinearLayout
@@ -257,11 +278,12 @@
                             android:weightSum="2"
                             android:orientation="vertical">
                             <TextView
+                                android:id="@+id/txt_level4"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:layout_marginEnd="30dp"
-                                android:layout_marginStart="40dp"
+                                android:layout_marginStart="20dp"
                                 android:text="@string/level_4"
                                 android:textSize="24sp"
                                 android:paddingStart="20dp"/>
@@ -269,25 +291,30 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginEnd="30dp"
-                                android:layout_marginStart="40dp"
+                                android:layout_marginStart="20dp"
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
                                 <TextView
+                                    android:id="@+id/txt_lock4"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:text="@string/unlocked"
-                                    android:textSize="18sp"
-                                    android:paddingLeft="20dp"/>
+                                    android:text="@string/lock"
+                                    android:gravity="center|left"
+                                    android:textSize="15sp"
+                                    android:paddingStart="20dp"/>
                             </LinearLayout>
 
                         </LinearLayout>
                         <Button
+                            android:id="@+id/btn_level4"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="@string/play"
+                            android:enabled="false"
                             android:textColor="@color/Background"
-                            android:layout_marginEnd="5dp"
-                            android:backgroundTint="@color/BasicColor"/>
+                            android:layout_margin="5dp"
+                            android:textAllCaps="false"
+                            android:background="@color/colorGray"/>
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -295,7 +322,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="5dp"
+                    app:cardCornerRadius="2dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp">
@@ -306,11 +333,12 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <ImageView
+                            android:id="@+id/image_level5"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:layout_marginStart="20dp"
-                            android:src="@drawable/ic_baseline_lock_open_24"
+                            android:src="@drawable/ic_baseline_lock_24"
                             android:tint="@color/colorBlack"
                             android:scaleType="fitCenter"/>
                         <LinearLayout
@@ -320,11 +348,12 @@
                             android:weightSum="2"
                             android:orientation="vertical">
                             <TextView
+                                android:id="@+id/txt_level5"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:layout_marginEnd="30dp"
-                                android:layout_marginStart="40dp"
+                                android:layout_marginStart="20dp"
                                 android:text="@string/level_5"
                                 android:textSize="24sp"
                                 android:paddingStart="20dp"/>
@@ -332,25 +361,30 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginEnd="30dp"
-                                android:layout_marginStart="40dp"
+                                android:layout_marginStart="20dp"
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
                                 <TextView
+                                    android:id="@+id/txt_lock5"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:text="@string/unlocked"
-                                    android:textSize="18sp"
+                                    android:text="@string/lock"
+                                    android:gravity="center|left"
+                                    android:textSize="15sp"
                                     android:paddingStart="20dp"/>
                             </LinearLayout>
 
                         </LinearLayout>
                         <Button
+                            android:id="@+id/btn_level5"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="@string/play"
+                            android:enabled="false"
                             android:textColor="@color/Background"
-                            android:layout_marginEnd="5dp"
-                            android:backgroundTint="@color/BasicColor"/>
+                            android:layout_margin="5dp"
+                            android:textAllCaps="false"
+                            android:background="@color/colorGray"/>
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -358,7 +392,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="5dp"
+                    app:cardCornerRadius="2dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp">
@@ -369,11 +403,12 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <ImageView
+                            android:id="@+id/image_level6"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:layout_marginStart="20dp"
-                            android:src="@drawable/ic_baseline_lock_open_24"
+                            android:src="@drawable/ic_baseline_lock_24"
                             android:tint="@color/colorBlack"
                             android:scaleType="fitCenter"/>
                         <LinearLayout
@@ -383,11 +418,12 @@
                             android:weightSum="2"
                             android:orientation="vertical">
                             <TextView
+                                android:id="@+id/txt_level6"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:layout_marginEnd="30dp"
-                                android:layout_marginStart="40dp"
+                                android:layout_marginStart="20dp"
                                 android:text="@string/level_6"
                                 android:textSize="24sp"
                                 android:paddingStart="20dp"/>
@@ -395,25 +431,30 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginEnd="30dp"
-                                android:layout_marginStart="40dp"
+                                android:layout_marginStart="20dp"
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
                                 <TextView
+                                    android:id="@+id/txt_lock6"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:text="@string/unlocked"
-                                    android:textSize="18sp"
+                                    android:text="@string/lock"
+                                    android:gravity="center|left"
+                                    android:textSize="15sp"
                                     android:paddingStart="20dp"/>
                             </LinearLayout>
 
                         </LinearLayout>
                         <Button
+                            android:id="@+id/btn_level6"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="@string/play"
+                            android:enabled="false"
                             android:textColor="@color/Background"
-                            android:layout_marginEnd="5dp"
-                            android:backgroundTint="@color/BasicColor"/>
+                            android:layout_margin="5dp"
+                            android:textAllCaps="false"
+                            android:background="@color/colorGray"/>
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -421,8 +462,8 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="10dp"
-                    android:layout_marginTop="5dp"
+                    app:cardCornerRadius="2dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp">
 
@@ -432,11 +473,12 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <ImageView
+                            android:id="@+id/image_level7"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:layout_marginStart="20dp"
-                            android:src="@drawable/ic_baseline_lock_open_24"
+                            android:src="@drawable/ic_baseline_lock_24"
                             android:tint="@color/colorBlack"
                             android:scaleType="fitCenter"/>
                         <LinearLayout
@@ -446,11 +488,12 @@
                             android:weightSum="2"
                             android:orientation="vertical">
                             <TextView
+                                android:id="@+id/txt_level7"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:layout_marginEnd="30dp"
-                                android:layout_marginStart="40dp"
+                                android:layout_marginStart="20dp"
                                 android:text="@string/level_7"
                                 android:textSize="24sp"
                                 android:paddingStart="20dp"/>
@@ -458,25 +501,30 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginEnd="30dp"
-                                android:layout_marginLeft="40dp"
+                                android:layout_marginStart="20dp"
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
                                 <TextView
+                                    android:id="@+id/txt_lock7"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:text="@string/unlocked"
-                                    android:textSize="18sp"
+                                    android:text="@string/lock"
+                                    android:gravity="center|left"
+                                    android:textSize="15sp"
                                     android:paddingStart="20dp"/>
                             </LinearLayout>
 
                         </LinearLayout>
                         <Button
+                            android:id="@+id/btn_level7"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="@string/play"
+                            android:enabled="false"
                             android:textColor="@color/Background"
-                            android:layout_marginEnd="5dp"
-                            android:backgroundTint="@color/BasicColor"/>
+                            android:layout_margin="5dp"
+                            android:textAllCaps="false"
+                            android:background="@color/colorGray"/>
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -484,7 +532,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="5dp"
+                    app:cardCornerRadius="2dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp">
@@ -495,11 +543,12 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <ImageView
+                            android:id="@+id/image_level8"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:layout_marginStart="20dp"
-                            android:src="@drawable/ic_baseline_lock_open_24"
+                            android:src="@drawable/ic_baseline_lock_24"
                             android:tint="@color/colorBlack"
                             android:scaleType="fitCenter"/>
                         <LinearLayout
@@ -509,11 +558,12 @@
                             android:weightSum="2"
                             android:orientation="vertical">
                             <TextView
+                                android:id="@+id/txt_level8"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:layout_marginEnd="30dp"
-                                android:layout_marginStart="40dp"
+                                android:layout_marginStart="20dp"
                                 android:text="@string/level_8"
                                 android:textSize="24sp"
                                 android:paddingStart="20dp"/>
@@ -521,25 +571,30 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginEnd="30dp"
-                                android:layout_marginStart="40dp"
+                                android:layout_marginStart="20dp"
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
                                 <TextView
+                                    android:id="@+id/txt_lock8"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:text="@string/unlocked"
-                                    android:textSize="18sp"
+                                    android:text="@string/lock"
+                                    android:gravity="center|left"
+                                    android:textSize="15sp"
                                     android:paddingStart="20dp"/>
                             </LinearLayout>
 
                         </LinearLayout>
                         <Button
+                            android:id="@+id/btn_level8"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="@string/play"
+                            android:enabled="false"
                             android:textColor="@color/Background"
-                            android:layout_marginEnd="5dp"
-                            android:backgroundTint="@color/BasicColor"/>
+                            android:layout_margin="5dp"
+                            android:textAllCaps="false"
+                            android:background="@color/colorGray"/>
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -547,7 +602,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="5dp"
+                    app:cardCornerRadius="2dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp">
@@ -558,11 +613,12 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <ImageView
+                            android:id="@+id/image_level9"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:layout_marginStart="20dp"
-                            android:src="@drawable/ic_baseline_lock_open_24"
+                            android:src="@drawable/ic_baseline_lock_24"
                             android:tint="@color/colorBlack"
                             android:scaleType="fitCenter"/>
                         <LinearLayout
@@ -572,11 +628,12 @@
                             android:weightSum="2"
                             android:orientation="vertical">
                             <TextView
+                                android:id="@+id/txt_level9"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:layout_marginEnd="30dp"
-                                android:layout_marginStart="40dp"
+                                android:layout_marginStart="20dp"
                                 android:text="@string/level_9"
                                 android:textSize="24sp"
                                 android:paddingStart="20dp"/>
@@ -584,25 +641,30 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginEnd="30dp"
-                                android:layout_marginStart="40dp"
+                                android:layout_marginStart="20dp"
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
                                 <TextView
+                                    android:id="@+id/txt_lock9"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:text="@string/unlocked"
-                                    android:textSize="18sp"
+                                    android:text="@string/lock"
+                                    android:gravity="center|left"
+                                    android:textSize="15sp"
                                     android:paddingStart="20dp"/>
                             </LinearLayout>
 
                         </LinearLayout>
                         <Button
+                            android:id="@+id/btn_level9"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="@string/play"
+                            android:enabled="false"
                             android:textColor="@color/Background"
-                            android:layout_marginEnd="5dp"
-                            android:backgroundTint="@color/BasicColor"/>
+                            android:layout_margin="5dp"
+                            android:textAllCaps="false"
+                            android:background="@color/colorGray"/>
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -610,7 +672,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="5dp"
+                    app:cardCornerRadius="2dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp">
@@ -621,11 +683,12 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
                         <ImageView
+                            android:id="@+id/image_level10"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
                             android:layout_marginStart="20dp"
-                            android:src="@drawable/ic_baseline_lock_open_24"
+                            android:src="@drawable/ic_baseline_lock_24"
                             android:tint="@color/colorBlack"
                             android:scaleType="fitCenter"/>
                         <LinearLayout
@@ -635,11 +698,12 @@
                             android:weightSum="2"
                             android:orientation="vertical">
                             <TextView
+                                android:id="@+id/txt_level10"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:layout_marginEnd="30dp"
-                                android:layout_marginStart="40dp"
+                                android:layout_marginStart="20dp"
                                 android:text="@string/level_10"
                                 android:textSize="24sp"
                                 android:paddingStart="20dp"/>
@@ -647,25 +711,30 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_marginEnd="30dp"
-                                android:layout_marginStart="40dp"
+                                android:layout_marginStart="20dp"
                                 android:layout_weight="1"
                                 android:orientation="horizontal">
                                 <TextView
+                                    android:id="@+id/txt_lock10"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:text="@string/unlocked"
-                                    android:textSize="18sp"
+                                    android:text="@string/lock"
+                                    android:gravity="center|left"
+                                    android:textSize="15sp"
                                     android:paddingStart="20dp"/>
                             </LinearLayout>
 
                         </LinearLayout>
                         <Button
+                            android:id="@+id/btn_level10"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="@string/play"
+                            android:enabled="false"
                             android:textColor="@color/Background"
-                            android:layout_marginEnd="5dp"
-                            android:backgroundTint="@color/BasicColor"/>
+                            android:layout_margin="5dp"
+                            android:textAllCaps="false"
+                            android:background="@color/colorGray"/>
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -673,5 +742,14 @@
             </LinearLayout>
 
         </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="150dp"
+        android:visibility="invisible"
+        android:background="@color/Background" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,5 @@
 package com.Complete.quizprogramming;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -11,7 +10,6 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -99,7 +97,7 @@ public class SignIn extends AppCompatActivity {
                                 editor.putBoolean("in_out",true);
                                 editor.apply();
 
-                                Intent i = new Intent(SignIn.this , Quiz.class);
+                                Intent i = new Intent(SignIn.this , Home.class);
                                 startActivity(i);
 
                                 Toast.makeText(SignIn.this, "Log in", Toast.LENGTH_SHORT).show();

@@ -10,6 +10,7 @@
                             android:id="@+id/setting"
                             android:icon="@drawable/ic_baseline_settings_applications_24" />
                         <item android:title="Best Player"
+                            android:id="@+id/best_player"
                             android:icon="@drawable/ic_baseline_emoji_events_24" />
                         <item android:title="Help"
                             android:id="@+id/help"

@@ -1,5 +1,6 @@
 package com.Complete.quizprogramming;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -10,14 +11,18 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class SignUp extends AppCompatActivity {
 
@@ -37,6 +42,7 @@ public class SignUp extends AppCompatActivity {
     private Boolean isPressed = false;
     private Boolean isPressed_repass = false;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference ref = database.getReference("user");
 
 
     @Override
@@ -69,6 +75,8 @@ public class SignUp extends AppCompatActivity {
                 if (netInfo == null){
                     Toast.makeText(SignUp.this, "Please check internet connection!", Toast.LENGTH_LONG).show();
                 }
+
+                // call sign in method
                 sign();
 
             }
@@ -111,25 +119,57 @@ public class SignUp extends AppCompatActivity {
         else if(txt_username.getText().toString().length() != 0) {
             if (txt_password.getText().toString().equals(txt_re_password.getText().toString())) {
 
-                DatabaseReference ref = database.getReference("user");
-                String ID = "id_" + txt_username.getText().toString();
 
-                ref.child(ID).child("username").setValue(txt_username.getText().toString());
-                ref.child(ID).child("password").setValue(txt_password.getText().toString());
-                ref.child(ID).child("score").child("correctAns").setValue("0");
-                ref.child(ID).child("score").child("incorrectAns").setValue("0");
-                ref.child(ID).child("score").child("totalQuiz").setValue("0");
-                ref.child(ID).child("score").child("totalScore").setValue("0");
-                ref.child(ID).child("level").child("c_program").setValue("0");
-                ref.child(ID).child("level").child("c_plus_program").setValue("0");
-                ref.child(ID).child("level").child("java_program").setValue("0");
-                saveData();
-                Intent i = new Intent(SignUp.this, Quiz.class);
-                startActivity(i);
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
 
-                Toast.makeText(this, "Log in", Toast.LENGTH_SHORT).show();
+                        for (DataSnapshot zoneSnapshot : dataSnapshot.getChildren()) {
 
-                finish();
+                            String user_name = zoneSnapshot.child("username").getValue(String.class);
+
+                            if (txt_username.getText().toString().equals(user_name)) {
+                                Log.e("test", "onDataChange: have something wrong " );
+                                Toast.makeText(SignUp.this, "This username already used!", Toast.LENGTH_SHORT).show();
+                                break;
+                            }else{
+
+                                String ID = "id_" + txt_username.getText().toString();
+
+                                ref.child(ID).child("username").setValue(txt_username.getText().toString());
+                                ref.child(ID).child("password").setValue(txt_password.getText().toString());
+                                ref.child(ID).child("correctAns").setValue("0");
+                                ref.child(ID).child("incorrectAns").setValue("0");
+                                ref.child(ID).child("totalQuiz").setValue("0");
+                                ref.child(ID).child("totalScore").setValue("0");
+
+                                // For check quiz progress
+                                ref.child(ID).child("program").child("c_program").child("level1").setValue("0");
+                                ref.child(ID).child("program").child("c_plus_program").child("level1").setValue("0");
+                                ref.child(ID).child("program").child("java_program").child("level1").setValue("0");
+
+                                // For check complete level
+                                ref.child(ID).child("program").child("c_program").child("complete_level").setValue("0");
+                                ref.child(ID).child("program").child("c_plus_program").child("complete_level").setValue("0");
+                                ref.child(ID).child("program").child("java_program").child("complete_level").setValue("0");
+
+                                saveData();
+                                Intent i = new Intent(SignUp.this, Home.class);
+                                startActivity(i);
+
+                                Toast.makeText(SignUp.this, "Log in", Toast.LENGTH_SHORT).show();
+
+                                finish();
+                            }
+
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+
+
             }
         }
     }

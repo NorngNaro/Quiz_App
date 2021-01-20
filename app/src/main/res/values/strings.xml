@@ -19,10 +19,6 @@
     <string name="unlocked">Unlocked</string>
     <string name="play">Play</string>
     <string name="level_2">Level 2</string>
-    <string name="unlocked">Unlocked</string>
-    <string name="play">Play</string>
-    <string name="unlocked">Unlocked</string>
-    <string name="play">Play</string>
     <string name="level_4">Level 4</string>
     <string name="level_5">Level 5</string>
     <string name="level_6">Level 6</string>
@@ -31,4 +27,13 @@
     <string name="level_9">Level 9</string>
     <string name="level_10">Level 10</string>
     <string name="profile">Profile</string>
+    <string name="lock">Locked</string>
+    <string name="other_program">Other Program</string>
+    <string name="java_programming">Java Programming</string>
+    <string name="c_programming">C++ Programming</string>
+    <string name="cprogramming">C Programming</string>
+    <string name="all_categories">All Categories</string>
+    <string name="complete_quiz">Completed</string>
+    <string name="txt_continue">Continue</string>
+
 </resources>
