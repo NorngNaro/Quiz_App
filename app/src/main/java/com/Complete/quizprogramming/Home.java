@@ -59,7 +59,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Home.this, Level.class);
-                intent.putExtra("click", "c_pro");
+                intent.putExtra("click", "c_program");
                 startActivity(intent);
 
             }
@@ -68,7 +68,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Home.this, Level.class);
-                intent.putExtra("click", "c_plus" );
+                intent.putExtra("click", "c_plus_program" );
                 startActivity(intent);
             }
         });
@@ -76,7 +76,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Home.this, Level.class);
-                intent.putExtra("click",  "java" );
+                intent.putExtra("click",  "java_program" );
                 startActivity(intent);
             }
         });

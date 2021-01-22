@@ -63,7 +63,7 @@
                 android:backgroundTint="@color/BasicColor"
                 android:gravity="center"
                 android:text="1/10"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -78,13 +78,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txt_count_quiz">
 
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_quiz"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:gravity="center"
-                    android:text="Which of the following is not correct variable type?"
                     android:textAlignment="center"
                     android:textSize="24sp" />
 
@@ -105,7 +105,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="float"
                     android:textAlignment="center"
                     android:textColor="@color/Background"
                     android:textSize="24sp" />
@@ -127,7 +126,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="real"
                     android:textAlignment="center"
                     android:textColor="@color/Background"
                     android:textSize="24sp" />
@@ -149,7 +147,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="int"
                     android:textAlignment="center"
                     android:textColor="@color/Background"
                     android:textSize="24sp" />
@@ -171,7 +168,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="double"
                     android:textAlignment="center"
                     android:textColor="@color/Background"
                     android:textSize="24sp" />
@@ -206,4 +202,13 @@
             android:textColor="@color/Background1"
             android:textSize="24sp"/>
     </androidx.cardview.widget.CardView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="150dp"
+        android:layout_marginTop="50dp"
+        android:visibility="invisible"
+        android:background="@color/Background" />
 </androidx.constraintlayout.widget.ConstraintLayout>

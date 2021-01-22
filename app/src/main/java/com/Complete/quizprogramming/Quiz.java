@@ -2,12 +2,23 @@ package com.Complete.quizprogramming;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.Complete.quizprogramming.databinding.ActivityQuizBinding;
 import com.google.firebase.database.DataSnapshot;
@@ -21,12 +32,8 @@ public class Quiz extends AppCompatActivity {
 
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     ActivityQuizBinding binding;
-    int btn_color, time, score, incorrect, quiz_range;
-    String right_ans;
-    String level;
-    String program;
-    String id;
-    int totalQuiz;
+    private int btn_color,correct,score,incorrect,quiz_range,totalQuiz,correctQuiz,com_level ;
+    private String right_ans,level, program , id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +42,28 @@ public class Quiz extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+
+        // For check internet connection
+        ConnectivityManager conMgr =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+        if (netInfo == null){
+            Toast.makeText(this, "Please check internet connection!", Toast.LENGTH_LONG).show();
+        }
+
+
+        binding.progressBar.setVisibility(View.VISIBLE);
+
         // Get username from cache to find id
         SignUp signUp = new SignUp();
         SharedPreferences sharedPreferences = getSharedPreferences(signUp.USER_INFO, MODE_PRIVATE);
         id = "id_" + sharedPreferences.getString(signUp.USERNAME, null);
-
 
         // set color
         btn_color = getColor(R.color.BasicColor);
         set_color();
 
 
-        // receive datafrom level screen by put String
+        // receive data from level screen by put String
         Intent intent = getIntent();
         program = intent.getStringExtra("program");
         level = intent.getStringExtra("level_click");
@@ -143,6 +160,7 @@ public class Quiz extends AppCompatActivity {
 
     // for block btn Answers
     private void block_btnAns(){
+        sum_quiz();
         binding.btnNext.setVisibility(View.VISIBLE);
         binding.answer1.setEnabled(false);
         binding.answer2.setEnabled(false);
@@ -168,16 +186,37 @@ public class Quiz extends AppCompatActivity {
 
     // btn next click
     private void btnNext_click() {
-        if(quiz_range == 3){
-
-
+        // if quiz range = 10 level complete
+        if(quiz_range == 10){
+            // Show dialog next level
+            final Dialog dialog = new Dialog(Quiz.this);
+            dialog.setContentView(R.layout.complete_level);
+            dialog.setCancelable(false);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+            CardView btnNext_level = dialog.findViewById(R.id.btn_nextLevel);
+            btnNext_level.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    sum_quiz();
+                    next_level();
+                    dialog.dismiss();
+                    // Delay time for back screen query data
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                           finish();
+                        }
+                    }, 300);
+                }
+            });
 
         }else {
-            sum_quiz();
+            binding.progressBar.setVisibility(View.VISIBLE);
             sum_total_quiz();
             quiz_level();
             quiz();
-            Log.e("BUG", "btnNext_click: quiz Range"+quiz_range );
             unblock_btnAns();
             show_btnAns();
             set_color();
@@ -185,6 +224,33 @@ public class Quiz extends AppCompatActivity {
         }
 
     }
+
+
+    // method for btn next level click
+    private void next_level(){
+
+        final int num_level = 1 + Integer.parseInt(String.valueOf(level.charAt(level.length()-1)));
+        final String complete_level = String.valueOf(com_level + 1);
+
+        final DatabaseReference ref = database.getReference("user").child(id);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ref.child("program").child(program).child("level"+num_level).child("completeQuiz").setValue("0");
+                ref.child("program").child(program).child("level"+num_level).child("correctQuiz").setValue("0");
+                ref.child("program").child(program).child("complete_level").setValue(complete_level);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(Quiz.this, "Have something went wrong!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
 
     // For checking answer that user have click
     private void check_ans() {
@@ -233,51 +299,73 @@ public class Quiz extends AppCompatActivity {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                quiz_range = Integer.parseInt(dataSnapshot.child("program").child(program).child(level).getValue(String.class)) + 1;
+                quiz_range = Integer.parseInt(dataSnapshot.child("program").child(program).child(level).child("completeQuiz").getValue(String.class)) + 1;
+                correctQuiz = Integer.parseInt(dataSnapshot.child("program").child(program).child(level).child("correctQuiz").getValue(String.class));
                 binding.txtCountQuiz.setText(quiz_range + "/10");
                 score = Integer.parseInt(dataSnapshot.child("totalScore").getValue(String.class));
                 binding.txtTime.setText("Score: " + score);
                 incorrect = Integer.parseInt(dataSnapshot.child("incorrectAns").getValue(String.class));
+                correct = Integer.parseInt(dataSnapshot.child("correctAns").getValue(String.class));
                 totalQuiz = Integer.parseInt(dataSnapshot.child("totalQuiz").getValue(String.class));
+                com_level = Integer.parseInt(dataSnapshot.child("program").child(program).child("complete_level").getValue(String.class));
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(Quiz.this, "Have something went wrong!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     // For sum Score
     private void sum_Score() {
-        score = score + 1;
+        score ++;
+        sum_correct();
         binding.txtTime.setText("Score: "+score);
         String addScore = String.valueOf(score);
         DatabaseReference ref = database.getReference("user").child(id);
         ref.child("totalScore").setValue(addScore);
     }
+
     // For sum quiz
     private void sum_quiz() {
         String addQuiz = String.valueOf(quiz_range);
         binding.txtCountQuiz.setText(quiz_range+"/10");
         DatabaseReference ref = database.getReference("user").child(id).child("program").child(program);
-        ref.child(level).setValue(addQuiz);
-        Log.e("Level", "sum_quiz: level"+level );
+        ref.child(level).child("completeQuiz").setValue(addQuiz);
     }
 
     // For sum incorrect
     private void sum_incorrect() {
-        String add_incorrect = String.valueOf(quiz_range);
+        sum_correctLevel();
+        incorrect++;
+        String add_incorrect = String.valueOf(incorrect);
         DatabaseReference ref = database.getReference("user").child(id);
         ref.child("incorrectAns").setValue(add_incorrect);
     }
 
+    // For sum correct
+    private void sum_correct() {
+        correct++;
+        String add_correct = String.valueOf(correct);
+        DatabaseReference ref = database.getReference("user").child(id);
+        ref.child("correctAns").setValue(add_correct);
+    }
+
     // For sum total Quiz
     private void sum_total_quiz() {
-        totalQuiz = totalQuiz + 1;
-        String add_totalQuiz = String.valueOf(quiz_range);
+        totalQuiz++;
+        String add_totalQuiz = String.valueOf(totalQuiz);
         DatabaseReference ref = database.getReference("user").child(id);
         ref.child("totalQuiz").setValue(add_totalQuiz);
+    }
+
+    // For sum correct in a level
+    private void sum_correctLevel() {
+        correctQuiz++;
+        String add_correctLevel = String.valueOf(correctQuiz);
+        DatabaseReference ref = database.getReference("user").child(id).child("program").child(program);
+        ref.child(level).child("correctQuiz").setValue(add_correctLevel);
     }
 
     // Get data from database and set to view
@@ -286,6 +374,7 @@ public class Quiz extends AppCompatActivity {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                binding.progressBar.setVisibility(View.GONE);
                 right_ans = dataSnapshot.child("quiz"+quiz_range).child("right_ans").getValue(String.class);
                 binding.txtQuiz.setText(dataSnapshot.child("quiz"+quiz_range).child("quiz").getValue(String.class));
                 binding.txtAns1.setText(dataSnapshot.child("quiz"+quiz_range).child("wrong_ans1").getValue(String.class));
@@ -293,10 +382,9 @@ public class Quiz extends AppCompatActivity {
                 binding.txtAns3.setText(dataSnapshot.child("quiz"+quiz_range).child("wrong_ans3").getValue(String.class));
                 binding.txtAns4.setText(dataSnapshot.child("quiz"+quiz_range).child("wrong_ans4").getValue(String.class));
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(Quiz.this, "Have something went wrong!", Toast.LENGTH_SHORT).show();
             }
         });
     }

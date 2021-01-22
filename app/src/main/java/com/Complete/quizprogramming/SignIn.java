@@ -56,12 +56,7 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                // For check internet connection
-                ConnectivityManager conMgr =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
-                if (netInfo == null){
-                    Toast.makeText(SignIn.this, "Please check internet connection!", Toast.LENGTH_LONG).show();
-                }
+                internet();
 
                 // For query data from database
                 DatabaseReference ref = database.getReference("user");
@@ -111,7 +106,7 @@ public class SignIn extends AppCompatActivity {
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
+                        Toast.makeText(SignIn.this, "Have something went wrong!", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -138,7 +133,7 @@ public class SignIn extends AppCompatActivity {
         hidepassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isPressed == true) {
+                if (isPressed) {
                     hidepassword.setImageResource(R.drawable.ic_visibility_off_black_24dp);
                     password.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 } else {
@@ -149,6 +144,17 @@ public class SignIn extends AppCompatActivity {
             }
 
         });
+    }
+
+
+    private void internet(){
+
+        // For check internet connection
+        ConnectivityManager conMgr =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+        if (netInfo == null){
+            Toast.makeText(this, "Please check internet connection!", Toast.LENGTH_LONG).show();
+        }
     }
 
 

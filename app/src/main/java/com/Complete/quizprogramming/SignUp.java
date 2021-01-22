@@ -144,9 +144,12 @@ public class SignUp extends AppCompatActivity {
                                 ref.child(ID).child("totalScore").setValue("0");
 
                                 // For check quiz progress
-                                ref.child(ID).child("program").child("c_program").child("level1").setValue("0");
-                                ref.child(ID).child("program").child("c_plus_program").child("level1").setValue("0");
-                                ref.child(ID).child("program").child("java_program").child("level1").setValue("0");
+                                ref.child(ID).child("program").child("c_program").child("level1").child("completeQuiz").setValue("0");
+                                ref.child(ID).child("program").child("c_program").child("level1").child("correctQuiz").setValue("0");
+                                ref.child(ID).child("program").child("c_plus_program").child("level1").child("completeQuiz").setValue("0");
+                                ref.child(ID).child("program").child("c_plus_program").child("level1").child("correctQuiz").setValue("0");
+                                ref.child(ID).child("program").child("java_program").child("level1").child("completeQuiz").setValue("0");
+                                ref.child(ID).child("program").child("java_program").child("level1").child("correctQuiz").setValue("0");
 
                                 // For check complete level
                                 ref.child(ID).child("program").child("c_program").child("complete_level").setValue("0");
@@ -166,6 +169,7 @@ public class SignUp extends AppCompatActivity {
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(SignUp.this, "Have something went wrong!", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -183,7 +187,7 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                if (isPressed == true) {
+                if (isPressed) {
                     hide1.setImageResource(R.drawable.ic_visibility_off_black_24dp);
                     txt_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 } else {
@@ -203,7 +207,7 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (isPressed_repass == true) {
+                if (isPressed_repass) {
                     hide2.setImageResource(R.drawable.ic_visibility_off_black_24dp);
                     txt_re_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 } else {

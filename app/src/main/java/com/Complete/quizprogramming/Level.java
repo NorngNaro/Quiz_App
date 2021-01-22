@@ -1,6 +1,5 @@
 package com.Complete.quizprogramming;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -9,7 +8,6 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,7 +16,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class Level extends AppCompatActivity {
@@ -38,6 +35,7 @@ public class Level extends AppCompatActivity {
 
         // init btn color
         color = getColor(R.color.colorPrimaryDark);
+
 
         // Visible loading
         binding.progressBar.setVisibility(View.VISIBLE);
@@ -183,6 +181,9 @@ public class Level extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        // Visible loading
+        binding.progressBar.setVisibility(View.VISIBLE);
+
         block_level();
         super.onResume();
     }
@@ -203,153 +204,160 @@ public class Level extends AppCompatActivity {
                 binding.progressBar.setVisibility(View.GONE);
 
                 // for check what is user click
-                click =  getIntent().getSerializableExtra("click").toString();
+                program_click =  getIntent().getSerializableExtra("click").toString();
 
-                if(click.equals("c_pro")) {
-                    program_click = "c_program";
-                }else if(click.equals("c_plus")) {
-                    program_click = "c_plus_program";
-                }else if(click.equals("java")){
-                    program_click = "java_program";
-                }
                 // Get value of level that have completed
                 int block_level = Integer.parseInt(dataSnapshot.child("program").child(program_click).child("complete_level").getValue(String.class));
-
-                //   complete_level = dataSnapshot.child("program").child(program_click).child("level"+(block_level+1)).getValue(String.class);
-
                 // Loop for lock level
                 for( int i = 1 ; i <= block_level + 1 ; i++ ){
+
+                    int progress = Integer.parseInt(dataSnapshot.child("program").child(program_click).child("level"+i).child("completeQuiz").getValue(String.class));
+
                     if(i==1){
                         binding.imageLevel1.setImageResource(R.drawable.ic_baseline_lock_open_24);
                         binding.btnLevel1.setEnabled(true);
                         binding.btnLevel1.setBackgroundColor(color);
-                        int progress = Integer.parseInt(dataSnapshot.child("program").child(program_click).child("level"+i).getValue(String.class));
                         if(progress==0){
                             binding.txtLock1.setText(R.string.unlocked);
-                        }else{
+                        }else if(progress == 10){
+                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress));
+                            binding.btnLevel1.setText("Retry");
+                        } else{
                             binding.txtLock1.setText("Completed: "+progress +"/10");
                             binding.btnLevel1.setText(R.string.txt_continue);
-
                         }
 
                     }else if(i==2){
                         binding.imageLevel2.setImageResource(R.drawable.ic_baseline_lock_open_24);
                         binding.btnLevel2.setEnabled(true);
                         binding.btnLevel2.setBackgroundColor(color);
-                        int progress = Integer.parseInt(dataSnapshot.child("program").child(program_click).child("level"+i).getValue(String.class));
                         if(progress==0){
                             binding.txtLock2.setText(R.string.unlocked);
-                        }else{
+                        }else if(progress == 10){
+                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress));
+                            binding.btnLevel1.setText("Retry");
+                        } else{
                             binding.txtLock2.setText("Completed: "+progress +"/10");
                             binding.btnLevel2.setText(R.string.txt_continue);
-
                         }
                     }else if(i==3){
                         binding.imageLevel3.setImageResource(R.drawable.ic_baseline_lock_open_24);
                         binding.btnLevel3.setEnabled(true);
                         binding.btnLevel3.setBackgroundColor(color);
-                        int progress = Integer.parseInt(dataSnapshot.child("program").child(program_click).child("level"+i).getValue(String.class));
                         if(progress==0){
                             binding.txtLock3.setText(R.string.unlocked);
-                        }else{
+                        }else if(progress == 10){
+                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress));
+                            binding.btnLevel1.setText("Retry");
+                        } else{
                             binding.txtLock3.setText("Completed: "+progress +"/10");
                             binding.btnLevel3.setText(R.string.txt_continue);
-
                         }
                     }else if(i==4){
                         binding.imageLevel4.setImageResource(R.drawable.ic_baseline_lock_open_24);
                         binding.btnLevel4.setEnabled(true);
                         binding.btnLevel4.setBackgroundColor(color);
-                        int progress = Integer.parseInt(dataSnapshot.child("program").child(program_click).child("level"+i).getValue(String.class));
                         if(progress==0){
                             binding.txtLock4.setText(R.string.unlocked);
-                        }else{
+                        }else if(progress == 10){
+                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress));
+                            binding.btnLevel1.setText("Retry");
+                        } else{
                             binding.txtLock4.setText("Completed: "+progress +"/10");
                             binding.btnLevel4.setText(R.string.txt_continue);
-
                         }
                     }else if(i==5){
                         binding.imageLevel5.setImageResource(R.drawable.ic_baseline_lock_open_24);
                         binding.btnLevel5.setEnabled(true);
                         binding.btnLevel5.setBackgroundColor(color);
-                        int progress = Integer.parseInt(dataSnapshot.child("program").child(program_click).child("level"+i).getValue(String.class));
                         if(progress==0){
                             binding.txtLock5.setText(R.string.unlocked);
-                        }else{
+                        }else if(progress == 10){
+                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress));
+                            binding.btnLevel1.setText("Retry");
+                        } else{
                             binding.txtLock5.setText("Completed: "+progress +"/10");
                             binding.btnLevel5.setText(R.string.txt_continue);
-
                         }
                     }else if(i==6){
                         binding.imageLevel6.setImageResource(R.drawable.ic_baseline_lock_open_24);
                         binding.btnLevel6.setEnabled(true);
                         binding.btnLevel6.setBackgroundColor(color);
-                        int progress = Integer.parseInt(dataSnapshot.child("program").child(program_click).child("level"+i).getValue(String.class));
                         if(progress==0){
                             binding.txtLock6.setText(R.string.unlocked);
-                        }else{
+                        }else if(progress == 10){
+                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress));
+                            binding.btnLevel1.setText("Retry");
+                        } else{
                             binding.txtLock6.setText("Completed: "+progress +"/10");
                             binding.btnLevel6.setText(R.string.txt_continue);
-
                         }
                     }else if(i==7){
                         binding.imageLevel7.setImageResource(R.drawable.ic_baseline_lock_open_24);
                         binding.btnLevel7.setEnabled(true);
                         binding.btnLevel7.setBackgroundColor(color);
-                        int progress = Integer.parseInt(dataSnapshot.child("program").child(program_click).child("level"+i).getValue(String.class));
                         if(progress==0){
                             binding.txtLock7.setText(R.string.unlocked);
-                        }else{
+                        }else if(progress == 10){
+                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress));
+                            binding.btnLevel1.setText("Retry");
+                        } else{
                             binding.txtLock7.setText("Completed: "+progress +"/10");
                             binding.btnLevel7.setText(R.string.txt_continue);
-
                         }
                     }else if(i==8){
                         binding.imageLevel8.setImageResource(R.drawable.ic_baseline_lock_open_24);
                         binding.btnLevel8.setEnabled(true);
                         binding.btnLevel8.setBackgroundColor(color);
-                        int progress = Integer.parseInt(dataSnapshot.child("program").child(program_click).child("level"+i).getValue(String.class));
                         if(progress==0){
                             binding.txtLock8.setText(R.string.unlocked);
-                        }else{
+                        }else if(progress == 10){
+                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress));
+                            binding.btnLevel1.setText("Retry");
+                        } else{
                             binding.txtLock8.setText("Completed: "+progress +"/10");
                             binding.btnLevel8.setText(R.string.txt_continue);
-
                         }
                     }else if(i==9){
                         binding.imageLevel9.setImageResource(R.drawable.ic_baseline_lock_open_24);
                         binding.btnLevel9.setEnabled(true);
                         binding.btnLevel9.setBackgroundColor(color);
-                        int progress = Integer.parseInt(dataSnapshot.child("program").child(program_click).child("level"+i).getValue(String.class));
                         if(progress==0){
                             binding.txtLock9.setText(R.string.unlocked);
-                        }else{
+                        }else if(progress == 10){
+                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress));
+                            binding.btnLevel1.setText("Retry");
+                        } else{
                             binding.txtLock9.setText("Completed: "+progress +"/10");
                             binding.btnLevel9.setText(R.string.txt_continue);
-
                         }
                     }else if(i==10){
                         binding.imageLevel10.setImageResource(R.drawable.ic_baseline_lock_open_24);
                         binding.btnLevel10.setEnabled(true);
                         binding.btnLevel10.setBackgroundColor(color);
-                        int progress = Integer.parseInt(dataSnapshot.child("program").child(program_click).child("level"+i).getValue(String.class));
                         if(progress==0){
                             binding.txtLock10.setText(R.string.unlocked);
-                        }else{
+                        }else if(progress == 10){
+                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress));
+                            binding.btnLevel1.setText("Retry");
+                        } else{
                             binding.txtLock10.setText("Completed: "+progress +"/10");
                             binding.btnLevel10.setText(R.string.txt_continue);
-
                         }
                     }
-
                 }
-
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Toast.makeText(Level.this, "Have something went wrong!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private int result(DataSnapshot dataSnapshot , int i , int progress){
+        int result = Integer.parseInt(dataSnapshot.child("program").child(program_click).child("level"+i).child("correctQuiz").getValue(String.class))/
+                progress;
+        return result;
     }
 
 
