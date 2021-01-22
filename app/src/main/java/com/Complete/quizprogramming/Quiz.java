@@ -2,6 +2,7 @@ package com.Complete.quizprogramming;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
@@ -34,6 +35,7 @@ public class Quiz extends AppCompatActivity {
     ActivityQuizBinding binding;
     private int btn_color,correct,score,incorrect,quiz_range,totalQuiz,correctQuiz,com_level ;
     private String right_ans,level, program , id;
+    private String retryPlay = "false";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,6 +196,8 @@ public class Quiz extends AppCompatActivity {
             dialog.setCancelable(false);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
+            AppCompatTextView txtresult =  dialog.findViewById(R.id.txt_percent);
+            txtresult.setText(show_result() + "%" );
             CardView btnNext_level = dialog.findViewById(R.id.btn_nextLevel);
             btnNext_level.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -201,14 +205,7 @@ public class Quiz extends AppCompatActivity {
                     sum_quiz();
                     next_level();
                     dialog.dismiss();
-                    // Delay time for back screen query data
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                           finish();
-                        }
-                    }, 300);
+
                 }
             });
 
@@ -228,25 +225,45 @@ public class Quiz extends AppCompatActivity {
 
     // method for btn next level click
     private void next_level(){
+        if(retryPlay.equals("false")){
+            final int num_level = 1 + Integer.parseInt(String.valueOf(level.charAt(level.length()-1)));
+            final String complete_level = String.valueOf(com_level + 1);
+            final DatabaseReference ref = database.getReference("user").child(id);
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
 
-        final int num_level = 1 + Integer.parseInt(String.valueOf(level.charAt(level.length()-1)));
-        final String complete_level = String.valueOf(com_level + 1);
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    ref.child("program").child(program).child("level"+num_level).child("completeQuiz").setValue("0");
+                    ref.child("program").child(program).child("level"+num_level).child("correctQuiz").setValue("0");
+                    ref.child("program").child(program).child("level"+num_level).child("levelComplete").setValue("false");
+                    ref.child("program").child(program).child(level).child("levelComplete").setValue("true");
+                    ref.child("program").child(program).child("complete_level").setValue(complete_level);
+                }
 
-        final DatabaseReference ref = database.getReference("user").child(id);
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(Quiz.this, "Have something went wrong!", Toast.LENGTH_SHORT).show();
+                }
+            });
 
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ref.child("program").child(program).child("level"+num_level).child("completeQuiz").setValue("0");
-                ref.child("program").child(program).child("level"+num_level).child("correctQuiz").setValue("0");
-                ref.child("program").child(program).child("complete_level").setValue(complete_level);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(Quiz.this, "Have something went wrong!", Toast.LENGTH_SHORT).show();
-            }
-        });
+            // Delay time for back screen query data
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    finish();
+                }
+            }, 800);
+        }else {
+            // Delay time for back screen query data
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    finish();
+                }
+            }, 800);
+        }
 
 
     }
@@ -308,6 +325,16 @@ public class Quiz extends AppCompatActivity {
                 correct = Integer.parseInt(dataSnapshot.child("correctAns").getValue(String.class));
                 totalQuiz = Integer.parseInt(dataSnapshot.child("totalQuiz").getValue(String.class));
                 com_level = Integer.parseInt(dataSnapshot.child("program").child(program).child("complete_level").getValue(String.class));
+                retryPlay = dataSnapshot.child("program").child(program).child(level).child("levelComplete").getValue(String.class);
+
+                // for retry level play
+                if(quiz_range == 11){
+                    binding.progressBar.setVisibility(View.VISIBLE);
+                    retry();
+                    quiz_level();
+                    quiz();
+                }
+
             }
 
             @Override
@@ -316,6 +343,18 @@ public class Quiz extends AppCompatActivity {
             }
         });
     }
+
+    // For print result
+    private String show_result(){
+
+        String result_show = String.valueOf((correctQuiz*100)/quiz_range);
+        Log.e("result", "show_result: "+correctQuiz );
+        Log.e("result", "show_result: "+quiz_range );
+        Log.e("result", "show_result:new "+((correctQuiz*100)/quiz_range) );
+        Log.e("result", "show_result: "+result_show );
+        return result_show;
+    }
+
 
     // For sum Score
     private void sum_Score() {
@@ -337,7 +376,6 @@ public class Quiz extends AppCompatActivity {
 
     // For sum incorrect
     private void sum_incorrect() {
-        sum_correctLevel();
         incorrect++;
         String add_incorrect = String.valueOf(incorrect);
         DatabaseReference ref = database.getReference("user").child(id);
@@ -346,6 +384,7 @@ public class Quiz extends AppCompatActivity {
 
     // For sum correct
     private void sum_correct() {
+        sum_correctLevel();
         correct++;
         String add_correct = String.valueOf(correct);
         DatabaseReference ref = database.getReference("user").child(id);
@@ -387,6 +426,24 @@ public class Quiz extends AppCompatActivity {
                 Toast.makeText(Quiz.this, "Have something went wrong!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void retry(){
+           final DatabaseReference ref = database.getReference("user").child(id).child("program").child(program).child(level);
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    ref.child("completeQuiz").setValue("0");
+                    ref.child("correctQuiz").setValue("0");
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(Quiz.this, "Have something went wrong!", Toast.LENGTH_SHORT).show();
+                }
+            });
     }
     
 }

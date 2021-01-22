@@ -146,10 +146,13 @@ public class SignUp extends AppCompatActivity {
                                 // For check quiz progress
                                 ref.child(ID).child("program").child("c_program").child("level1").child("completeQuiz").setValue("0");
                                 ref.child(ID).child("program").child("c_program").child("level1").child("correctQuiz").setValue("0");
+                                ref.child(ID).child("program").child("c_program").child("level1").child("levelComplete").setValue("false");
                                 ref.child(ID).child("program").child("c_plus_program").child("level1").child("completeQuiz").setValue("0");
                                 ref.child(ID).child("program").child("c_plus_program").child("level1").child("correctQuiz").setValue("0");
+                                ref.child(ID).child("program").child("c_plus_program").child("level1").child("levelComplete").setValue("false");
                                 ref.child(ID).child("program").child("java_program").child("level1").child("completeQuiz").setValue("0");
                                 ref.child(ID).child("program").child("java_program").child("level1").child("correctQuiz").setValue("0");
+                                ref.child(ID).child("program").child("java_program").child("level1").child("levelComplete").setValue("false");
 
                                 // For check complete level
                                 ref.child(ID).child("program").child("c_program").child("complete_level").setValue("0");

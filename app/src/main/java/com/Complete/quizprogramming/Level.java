@@ -26,6 +26,7 @@ public class Level extends AppCompatActivity {
     public String click;
     int color;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -208,6 +209,7 @@ public class Level extends AppCompatActivity {
 
                 // Get value of level that have completed
                 int block_level = Integer.parseInt(dataSnapshot.child("program").child(program_click).child("complete_level").getValue(String.class));
+
                 // Loop for lock level
                 for( int i = 1 ; i <= block_level + 1 ; i++ ){
 
@@ -217,10 +219,11 @@ public class Level extends AppCompatActivity {
                         binding.imageLevel1.setImageResource(R.drawable.ic_baseline_lock_open_24);
                         binding.btnLevel1.setEnabled(true);
                         binding.btnLevel1.setBackgroundColor(color);
+                        binding.btnLevel1.setText(R.string.play);
                         if(progress==0){
                             binding.txtLock1.setText(R.string.unlocked);
                         }else if(progress == 10){
-                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress));
+                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress) + "%");
                             binding.btnLevel1.setText("Retry");
                         } else{
                             binding.txtLock1.setText("Completed: "+progress +"/10");
@@ -231,11 +234,12 @@ public class Level extends AppCompatActivity {
                         binding.imageLevel2.setImageResource(R.drawable.ic_baseline_lock_open_24);
                         binding.btnLevel2.setEnabled(true);
                         binding.btnLevel2.setBackgroundColor(color);
+                        binding.btnLevel2.setText(R.string.play);
                         if(progress==0){
                             binding.txtLock2.setText(R.string.unlocked);
                         }else if(progress == 10){
-                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress));
-                            binding.btnLevel1.setText("Retry");
+                            binding.txtLock2.setText("Result: "+result(dataSnapshot , i , progress) + "%");
+                            binding.btnLevel2.setText("Retry");
                         } else{
                             binding.txtLock2.setText("Completed: "+progress +"/10");
                             binding.btnLevel2.setText(R.string.txt_continue);
@@ -244,11 +248,12 @@ public class Level extends AppCompatActivity {
                         binding.imageLevel3.setImageResource(R.drawable.ic_baseline_lock_open_24);
                         binding.btnLevel3.setEnabled(true);
                         binding.btnLevel3.setBackgroundColor(color);
+                        binding.btnLevel3.setText(R.string.play);
                         if(progress==0){
                             binding.txtLock3.setText(R.string.unlocked);
                         }else if(progress == 10){
-                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress));
-                            binding.btnLevel1.setText("Retry");
+                            binding.txtLock3.setText("Result: "+result(dataSnapshot , i , progress) + "%");
+                            binding.btnLevel3.setText("Retry");
                         } else{
                             binding.txtLock3.setText("Completed: "+progress +"/10");
                             binding.btnLevel3.setText(R.string.txt_continue);
@@ -257,11 +262,12 @@ public class Level extends AppCompatActivity {
                         binding.imageLevel4.setImageResource(R.drawable.ic_baseline_lock_open_24);
                         binding.btnLevel4.setEnabled(true);
                         binding.btnLevel4.setBackgroundColor(color);
+                        binding.btnLevel4.setText(R.string.play);
                         if(progress==0){
                             binding.txtLock4.setText(R.string.unlocked);
                         }else if(progress == 10){
-                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress));
-                            binding.btnLevel1.setText("Retry");
+                            binding.txtLock4.setText("Result: "+result(dataSnapshot , i , progress) + "%");
+                            binding.btnLevel4.setText("Retry");
                         } else{
                             binding.txtLock4.setText("Completed: "+progress +"/10");
                             binding.btnLevel4.setText(R.string.txt_continue);
@@ -270,11 +276,12 @@ public class Level extends AppCompatActivity {
                         binding.imageLevel5.setImageResource(R.drawable.ic_baseline_lock_open_24);
                         binding.btnLevel5.setEnabled(true);
                         binding.btnLevel5.setBackgroundColor(color);
+                        binding.btnLevel5.setText(R.string.play);
                         if(progress==0){
                             binding.txtLock5.setText(R.string.unlocked);
                         }else if(progress == 10){
-                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress));
-                            binding.btnLevel1.setText("Retry");
+                            binding.txtLock5.setText("Result: "+result(dataSnapshot , i , progress) + "%");
+                            binding.btnLevel5.setText("Retry");
                         } else{
                             binding.txtLock5.setText("Completed: "+progress +"/10");
                             binding.btnLevel5.setText(R.string.txt_continue);
@@ -283,11 +290,12 @@ public class Level extends AppCompatActivity {
                         binding.imageLevel6.setImageResource(R.drawable.ic_baseline_lock_open_24);
                         binding.btnLevel6.setEnabled(true);
                         binding.btnLevel6.setBackgroundColor(color);
+                        binding.btnLevel6.setText(R.string.play);
                         if(progress==0){
                             binding.txtLock6.setText(R.string.unlocked);
                         }else if(progress == 10){
-                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress));
-                            binding.btnLevel1.setText("Retry");
+                            binding.txtLock6.setText("Result: "+result(dataSnapshot , i , progress) + "%");
+                            binding.btnLevel6.setText("Retry");
                         } else{
                             binding.txtLock6.setText("Completed: "+progress +"/10");
                             binding.btnLevel6.setText(R.string.txt_continue);
@@ -296,11 +304,12 @@ public class Level extends AppCompatActivity {
                         binding.imageLevel7.setImageResource(R.drawable.ic_baseline_lock_open_24);
                         binding.btnLevel7.setEnabled(true);
                         binding.btnLevel7.setBackgroundColor(color);
+                        binding.btnLevel7.setText(R.string.play);
                         if(progress==0){
                             binding.txtLock7.setText(R.string.unlocked);
                         }else if(progress == 10){
-                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress));
-                            binding.btnLevel1.setText("Retry");
+                            binding.txtLock7.setText("Result: "+result(dataSnapshot , i , progress) + "%");
+                            binding.btnLevel7.setText("Retry");
                         } else{
                             binding.txtLock7.setText("Completed: "+progress +"/10");
                             binding.btnLevel7.setText(R.string.txt_continue);
@@ -309,11 +318,12 @@ public class Level extends AppCompatActivity {
                         binding.imageLevel8.setImageResource(R.drawable.ic_baseline_lock_open_24);
                         binding.btnLevel8.setEnabled(true);
                         binding.btnLevel8.setBackgroundColor(color);
+                        binding.btnLevel8.setText(R.string.play);
                         if(progress==0){
                             binding.txtLock8.setText(R.string.unlocked);
                         }else if(progress == 10){
-                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress));
-                            binding.btnLevel1.setText("Retry");
+                            binding.txtLock8.setText("Result: "+result(dataSnapshot , i , progress) + "%");
+                            binding.btnLevel8.setText("Retry");
                         } else{
                             binding.txtLock8.setText("Completed: "+progress +"/10");
                             binding.btnLevel8.setText(R.string.txt_continue);
@@ -322,11 +332,12 @@ public class Level extends AppCompatActivity {
                         binding.imageLevel9.setImageResource(R.drawable.ic_baseline_lock_open_24);
                         binding.btnLevel9.setEnabled(true);
                         binding.btnLevel9.setBackgroundColor(color);
+                        binding.btnLevel9.setText(R.string.play);
                         if(progress==0){
                             binding.txtLock9.setText(R.string.unlocked);
                         }else if(progress == 10){
-                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress));
-                            binding.btnLevel1.setText("Retry");
+                            binding.txtLock9.setText("Result: "+result(dataSnapshot , i , progress) + "%");
+                            binding.btnLevel9.setText("Retry");
                         } else{
                             binding.txtLock9.setText("Completed: "+progress +"/10");
                             binding.btnLevel9.setText(R.string.txt_continue);
@@ -335,11 +346,12 @@ public class Level extends AppCompatActivity {
                         binding.imageLevel10.setImageResource(R.drawable.ic_baseline_lock_open_24);
                         binding.btnLevel10.setEnabled(true);
                         binding.btnLevel10.setBackgroundColor(color);
+                        binding.btnLevel10.setText(R.string.play);
                         if(progress==0){
                             binding.txtLock10.setText(R.string.unlocked);
                         }else if(progress == 10){
-                            binding.txtLock1.setText("Result: "+result(dataSnapshot , i , progress));
-                            binding.btnLevel1.setText("Retry");
+                            binding.txtLock10.setText("Result: "+result(dataSnapshot , i , progress) + "%");
+                            binding.btnLevel10.setText("Retry");
                         } else{
                             binding.txtLock10.setText("Completed: "+progress +"/10");
                             binding.btnLevel10.setText(R.string.txt_continue);
@@ -355,7 +367,7 @@ public class Level extends AppCompatActivity {
     }
 
     private int result(DataSnapshot dataSnapshot , int i , int progress){
-        int result = Integer.parseInt(dataSnapshot.child("program").child(program_click).child("level"+i).child("correctQuiz").getValue(String.class))/
+        int result = (Integer.parseInt(dataSnapshot.child("program").child(program_click).child("level"+i).child("correctQuiz").getValue(String.class))*100)/
                 progress;
         return result;
     }

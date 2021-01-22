@@ -418,7 +418,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="150dp"
-        android:visibility="invisible"
         android:background="@color/Background" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
