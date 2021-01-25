@@ -11,6 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
@@ -58,15 +59,18 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         c_Program.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn();
                 Intent intent = new Intent(Home.this, Level.class);
                 intent.putExtra("click", "c_program");
                 startActivity(intent);
+
 
             }
         });
         c_plus_program.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn();
                 Intent intent = new Intent(Home.this, Level.class);
                 intent.putExtra("click", "c_plus_program" );
                 startActivity(intent);
@@ -75,6 +79,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         java_Program.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn();
                 Intent intent = new Intent(Home.this, Level.class);
                 intent.putExtra("click",  "java_program" );
                 startActivity(intent);
@@ -103,8 +108,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         if (id == R.id.log_out) {
             drawerLayout.closeDrawers();
             // for insert login to false
-            SignUp signUp = new SignUp();
-            SharedPreferences sharedPreferences = getSharedPreferences(signUp.USER_INFO, MODE_PRIVATE);
+            SharePrefer sharePrefer = new SharePrefer();
+            SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("in_out",false);
             editor.apply();
@@ -114,18 +119,22 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             startActivity(intent);
             finish();
         }else if(id==R.id.setting){
+            btn();
             drawerLayout.closeDrawers();
             Intent intent = new Intent(this,Setting.class);
             startActivity(intent);
         }else if(id==R.id.profile){
+            btn();
             drawerLayout.closeDrawers();
             Intent intent = new Intent(Home.this,Profile.class);
             startActivity(intent);
         }else if(id==R.id.about){
+            btn();
             drawerLayout.closeDrawers();
             Intent intent = new Intent(Home.this,About.class);
             startActivity(intent);
         }else if(id==R.id.best_player){
+            btn();
             drawerLayout.closeDrawers();
             Intent intent = new Intent(Home.this,BestPlayer.class);
             startActivity(intent);
@@ -174,5 +183,14 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                  alertDialog.show();
     }
 
+    private void btn(){
+        SharePrefer sharePrefer = new SharePrefer();
+        SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO, MODE_PRIVATE);
+        boolean hear =sharedPreferences.getBoolean(sharePrefer.SOUND,false);
+        if(hear){
+            MediaPlayer ring= MediaPlayer.create(this,R.raw.clickbtn);
+            ring.start();
+        }
+    }
 }
 

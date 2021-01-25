@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ public class SignIn extends AppCompatActivity {
     private Boolean isPressed = false;
     private String pass_word="";
     private String user_name="";
+    SharePrefer sharePrefer = new SharePrefer();
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
@@ -65,8 +67,8 @@ public class SignIn extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                         // For check login or logout using share Preference
-                        SignUp signUp = new SignUp();
-                        SharedPreferences sharedPreferences = getSharedPreferences(signUp.USER_INFO,MODE_PRIVATE);
+
+                        SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO,MODE_PRIVATE);
                         if(password.getText().toString().length()==0){
                             if(username.getText().toString().length()==0){
                                 username.setError("Enter Username");

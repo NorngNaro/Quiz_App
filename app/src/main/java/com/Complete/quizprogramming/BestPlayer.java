@@ -3,15 +3,16 @@ package com.Complete.quizprogramming;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
 import com.Complete.quizprogramming.databinding.ActivityBestPlayerBinding;
-import com.Complete.quizprogramming.databinding.ActivityLevelBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -34,7 +35,14 @@ public class BestPlayer extends AppCompatActivity {
         binding.backPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                btn();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 200);
             }
         });
 
@@ -77,5 +85,13 @@ public class BestPlayer extends AppCompatActivity {
         });
     }
 
-
+    private void btn(){
+        SharePrefer sharePrefer = new SharePrefer();
+        SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO, MODE_PRIVATE);
+        boolean hear =sharedPreferences.getBoolean(sharePrefer.SOUND,false);
+        if(hear){
+            MediaPlayer ring= MediaPlayer.create(this,R.raw.clickbtn);
+            ring.start();
+        }
+    }
 }

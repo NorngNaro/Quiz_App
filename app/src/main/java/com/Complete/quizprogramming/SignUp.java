@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -26,12 +27,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SignUp extends AppCompatActivity {
 
-    public final String USER_INFO = "user_info";
-    public final String USERNAME = "username";
-    public final String PASSWORD = "password";
-    public final String ID = "id";
-    public final String IN_OUT = "in_out";
-
 
     private EditText txt_username;
     private EditText txt_password;
@@ -41,6 +36,7 @@ public class SignUp extends AppCompatActivity {
     private ImageButton hide2;
     private Boolean isPressed = false;
     private Boolean isPressed_repass = false;
+    SharePrefer sharePrefer = new SharePrefer();
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ref = database.getReference("user");
 
@@ -88,12 +84,12 @@ public class SignUp extends AppCompatActivity {
 
     public void saveData() {
 
-        SharedPreferences sharedPreferences = getSharedPreferences(USER_INFO, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putString( USERNAME, txt_username.getText().toString());
-        editor.putString( PASSWORD, txt_password.getText().toString());
-        editor.putBoolean(IN_OUT,true);
+        editor.putString( sharePrefer.USERNAME, txt_username.getText().toString());
+        editor.putString( sharePrefer.PASSWORD, txt_password.getText().toString());
+        editor.putBoolean(sharePrefer.IN_OUT,true);
 
         editor.apply();
 
@@ -189,7 +185,6 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
                 if (isPressed) {
                     hide1.setImageResource(R.drawable.ic_visibility_off_black_24dp);
                     txt_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -222,7 +217,6 @@ public class SignUp extends AppCompatActivity {
 
         });
     }
-
 
 
 }

@@ -5,18 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.cardview.widget.CardView;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -36,6 +36,7 @@ public class Quiz extends AppCompatActivity {
     private int btn_color,correct,score,incorrect,quiz_range,totalQuiz,correctQuiz,com_level ;
     private String right_ans,level, program , id;
     private String retryPlay = "false";
+    SharePrefer sharePrefer = new SharePrefer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +57,9 @@ public class Quiz extends AppCompatActivity {
         binding.progressBar.setVisibility(View.VISIBLE);
 
         // Get username from cache to find id
-        SignUp signUp = new SignUp();
-        SharedPreferences sharedPreferences = getSharedPreferences(signUp.USER_INFO, MODE_PRIVATE);
-        id = "id_" + sharedPreferences.getString(signUp.USERNAME, null);
+        SharePrefer sharePrefer = new SharePrefer();
+        SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO, MODE_PRIVATE);
+        id = "id_" + sharedPreferences.getString(sharePrefer.USERNAME, null);
 
         // set color
         btn_color = getColor(R.color.BasicColor);
@@ -78,6 +79,7 @@ public class Quiz extends AppCompatActivity {
         binding.btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn();
                 btnNext_click();
             }
         });
@@ -85,6 +87,7 @@ public class Quiz extends AppCompatActivity {
         binding.backQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn();
                 finish();
             }
         });
@@ -96,9 +99,12 @@ public class Quiz extends AppCompatActivity {
                 if (binding.txtAns1.getText().equals(right_ans)) {
                     binding.answer1.setCardBackgroundColor(getColor(R.color.true_color));
                     sum_Score();
+                    right_ans();
                 } else {
                     binding.answer1.setCardBackgroundColor(getColor(R.color.wrong_color));
                     sum_incorrect();
+                    vibrate();
+                    wrong_ans();
                 }
                 check_ans();
             }
@@ -111,9 +117,12 @@ public class Quiz extends AppCompatActivity {
                 if (binding.txtAns2.getText().equals(right_ans)) {
                     binding.answer2.setCardBackgroundColor(getColor(R.color.true_color));
                     sum_Score();
+                    right_ans();
                 } else {
                     binding.answer2.setCardBackgroundColor(getColor(R.color.wrong_color));
                     sum_incorrect();
+                    vibrate();
+                    wrong_ans();
                 }
                 check_ans();
             }
@@ -126,9 +135,12 @@ public class Quiz extends AppCompatActivity {
                 if (binding.txtAns3.getText().equals(right_ans)) {
                     binding.answer3.setCardBackgroundColor(getColor(R.color.true_color));
                     sum_Score();
+                    right_ans();
                 } else {
                     binding.answer3.setCardBackgroundColor(getColor(R.color.wrong_color));
                     sum_incorrect();
+                    vibrate();
+                    wrong_ans();
                 }
                 check_ans();
             }
@@ -141,9 +153,12 @@ public class Quiz extends AppCompatActivity {
                 if (binding.txtAns4.getText().equals(right_ans)) {
                     binding.answer4.setCardBackgroundColor(getColor(R.color.true_color));
                     sum_Score();
+                    right_ans();
                 } else {
                     binding.answer4.setCardBackgroundColor(getColor(R.color.wrong_color));
                     sum_incorrect();
+                    vibrate();
+                    wrong_ans();
                 }
                 check_ans();
             }
@@ -436,7 +451,6 @@ public class Quiz extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     ref.child("completeQuiz").setValue("0");
                     ref.child("correctQuiz").setValue("0");
-
                 }
 
                 @Override
@@ -444,6 +458,42 @@ public class Quiz extends AppCompatActivity {
                     Toast.makeText(Quiz.this, "Have something went wrong!", Toast.LENGTH_SHORT).show();
                 }
             });
+    }
+
+    private void vibrate(){
+        SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO, MODE_PRIVATE);
+        boolean vibrate =sharedPreferences.getBoolean(sharePrefer.VIBRATE,false);
+        if(vibrate){
+            // Get instance of Vibrator from current Context
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            // Vibrate for 400 milliseconds
+            v.vibrate(400);
+        }
+    }
+    private void wrong_ans(){
+        SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO, MODE_PRIVATE);
+        boolean hear =sharedPreferences.getBoolean(sharePrefer.SOUND,false);
+        if(hear){
+            MediaPlayer ring= MediaPlayer.create(this,R.raw.wrong_multi_choice);
+            ring.start();
+        }
+    }
+    private void right_ans(){
+        SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO, MODE_PRIVATE);
+        boolean hear =sharedPreferences.getBoolean(sharePrefer.SOUND,false);
+        if(hear){
+            MediaPlayer ring= MediaPlayer.create(this,R.raw.mp_correct_answer);
+            ring.start();
+        }
+    }
+
+    private void btn(){
+        SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO, MODE_PRIVATE);
+        boolean hear =sharedPreferences.getBoolean(sharePrefer.SOUND,false);
+        if(hear){
+            MediaPlayer ring= MediaPlayer.create(this,R.raw.clickbtn);
+            ring.start();
+        }
     }
     
 }

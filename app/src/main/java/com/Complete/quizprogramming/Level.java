@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ public class Level extends AppCompatActivity {
     private ActivityLevelBinding binding;
     public String click;
     int color;
+    SharePrefer sharePrefer = new SharePrefer();
 
 
     @Override
@@ -54,7 +57,14 @@ public class Level extends AppCompatActivity {
         binding.backLevel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                btn();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 200);
             }
         });
 
@@ -62,6 +72,7 @@ public class Level extends AppCompatActivity {
         binding.btnLevel1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn();
                 Intent intent = new Intent( Level.this , Quiz.class);
                 intent.putExtra("level_click", "level1" );
                 intent.putExtra("program", program_click);
@@ -74,6 +85,7 @@ public class Level extends AppCompatActivity {
         binding.btnLevel2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn();
                 Intent intent = new Intent( Level.this , Quiz.class);
                 intent.putExtra("level_click", "level2" );
                 intent.putExtra("program", program_click);
@@ -86,6 +98,7 @@ public class Level extends AppCompatActivity {
         binding.btnLevel3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn();
                 Intent intent = new Intent( Level.this , Quiz.class);
                 intent.putExtra("level_click", "level3" );
                 intent.putExtra("program", program_click);
@@ -98,6 +111,7 @@ public class Level extends AppCompatActivity {
         binding.btnLevel4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn();
                 Intent intent = new Intent( Level.this , Quiz.class);
                 intent.putExtra("level_click", "level4" );
                 intent.putExtra("program", program_click);
@@ -110,6 +124,7 @@ public class Level extends AppCompatActivity {
         binding.btnLevel5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn();
                 Intent intent = new Intent( Level.this , Quiz.class);
                 intent.putExtra("level_click", "level5" );
                 intent.putExtra("program", program_click);
@@ -122,6 +137,7 @@ public class Level extends AppCompatActivity {
         binding.btnLevel6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn();
                 Intent intent = new Intent( Level.this , Quiz.class);
                 intent.putExtra("level_click", "level6" );
                 intent.putExtra("program", program_click);
@@ -134,6 +150,7 @@ public class Level extends AppCompatActivity {
         binding.btnLevel7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn();
                 Intent intent = new Intent( Level.this , Quiz.class);
                 intent.putExtra("level_click", "level7" );
                 intent.putExtra("program", program_click);
@@ -146,6 +163,7 @@ public class Level extends AppCompatActivity {
         binding.btnLevel8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn();
                 Intent intent = new Intent( Level.this , Quiz.class);
                 intent.putExtra("level_click", "level8" );
                 intent.putExtra("program", program_click);
@@ -158,6 +176,7 @@ public class Level extends AppCompatActivity {
         binding.btnLevel9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn();
                 Intent intent = new Intent( Level.this , Quiz.class);
                 intent.putExtra("level_click", "level9" );
                 intent.putExtra("program", program_click);
@@ -170,6 +189,7 @@ public class Level extends AppCompatActivity {
         binding.btnLevel10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btn();
                 Intent intent = new Intent( Level.this , Quiz.class);
                 intent.putExtra("level_click", "level10" );
                 intent.putExtra("program", program_click);
@@ -192,9 +212,9 @@ public class Level extends AppCompatActivity {
     private void block_level(){
 
         // Get username from cache to find id
-        SignUp signUp = new SignUp();
-        SharedPreferences sharedPreferences = getSharedPreferences(signUp.USER_INFO,MODE_PRIVATE);
-        String id = "id_"+ sharedPreferences.getString(signUp.USERNAME,null) ;
+        SharePrefer sharePrefer = new SharePrefer();
+        SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO,MODE_PRIVATE);
+        String id = "id_"+ sharedPreferences.getString(sharePrefer.USERNAME,null) ;
 
         // Query to database
         DatabaseReference ref = database.getReference("user").child(id);
@@ -370,6 +390,15 @@ public class Level extends AppCompatActivity {
         int result = (Integer.parseInt(dataSnapshot.child("program").child(program_click).child("level"+i).child("correctQuiz").getValue(String.class))*100)/
                 progress;
         return result;
+    }
+
+    private void btn(){
+        SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO, MODE_PRIVATE);
+        boolean hear =sharedPreferences.getBoolean(sharePrefer.SOUND,false);
+        if(hear){
+            MediaPlayer ring= MediaPlayer.create(this,R.raw.clickbtn);
+            ring.start();
+        }
     }
 
 

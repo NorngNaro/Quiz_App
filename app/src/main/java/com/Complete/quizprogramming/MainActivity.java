@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.widget.ProgressBar;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,9 +25,9 @@ public class MainActivity extends AppCompatActivity {
             }
             public  void onFinish(){
                 process.setProgress(100);
-                SignUp signUp = new SignUp();
-                SharedPreferences sharedPreferences = getSharedPreferences(signUp.USER_INFO,MODE_PRIVATE);
-                boolean log =sharedPreferences.getBoolean(signUp.IN_OUT,false);
+                SharePrefer sharePrefer = new SharePrefer();
+                SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO,MODE_PRIVATE);
+                boolean log =sharedPreferences.getBoolean(sharePrefer.IN_OUT,false);
                 if( log == false){
                     Intent intent = new Intent(MainActivity.this, SignIn.class);
                     startActivity(intent);

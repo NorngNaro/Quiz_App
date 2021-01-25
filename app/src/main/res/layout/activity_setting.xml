@@ -153,7 +153,7 @@
                             android:layout_weight="1">
 
                             <Switch
-                                android:id="@+id/witch_vibrate"
+                                android:id="@+id/switch_vibrate"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:paddingRight="20dp"/>
