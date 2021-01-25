@@ -21,14 +21,8 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private Toolbar toolbar;
 
     private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-    private CardView c_Program;
-    private CardView c_plus_program;
-    private CardView java_Program;
-    private CardView other_program;
     boolean doubleBackToExitPressedOnce = false;
 
 
@@ -37,15 +31,15 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        toolbar = findViewById(R.id.main_toolbar);
+        Toolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        c_Program = findViewById(R.id.btn_C_program);
-        other_program = findViewById(R.id.btn_Other_program);
-        c_plus_program = findViewById(R.id.btn_C_plus_program);
-        java_Program = findViewById(R.id.btn_Java_program);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        CardView c_Program = findViewById(R.id.btn_C_program);
+        CardView other_program = findViewById(R.id.btn_Other_program);
+        CardView c_plus_program = findViewById(R.id.btn_C_plus_program);
+        CardView java_Program = findViewById(R.id.btn_Java_program);
 
 
 
@@ -104,7 +98,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.log_out) {
             drawerLayout.closeDrawers();
             // for insert login to false
