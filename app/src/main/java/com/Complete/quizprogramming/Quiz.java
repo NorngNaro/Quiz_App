@@ -462,7 +462,7 @@ public class Quiz extends AppCompatActivity {
 
     private void vibrate(){
         SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO, MODE_PRIVATE);
-        boolean vibrate =sharedPreferences.getBoolean(sharePrefer.VIBRATE,false);
+        boolean vibrate =sharedPreferences.getBoolean(sharePrefer.VIBRATE,true);
         if(vibrate){
             // Get instance of Vibrator from current Context
             Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -472,7 +472,7 @@ public class Quiz extends AppCompatActivity {
     }
     private void wrong_ans(){
         SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO, MODE_PRIVATE);
-        boolean hear =sharedPreferences.getBoolean(sharePrefer.SOUND,false);
+        boolean hear =sharedPreferences.getBoolean(sharePrefer.SOUND,true);
         if(hear){
             MediaPlayer ring= MediaPlayer.create(this,R.raw.wrong_multi_choice);
             ring.start();
@@ -480,7 +480,7 @@ public class Quiz extends AppCompatActivity {
     }
     private void right_ans(){
         SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO, MODE_PRIVATE);
-        boolean hear =sharedPreferences.getBoolean(sharePrefer.SOUND,false);
+        boolean hear =sharedPreferences.getBoolean(sharePrefer.SOUND,true);
         if(hear){
             MediaPlayer ring= MediaPlayer.create(this,R.raw.mp_correct_answer);
             ring.start();
@@ -489,7 +489,7 @@ public class Quiz extends AppCompatActivity {
 
     private void btn(){
         SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO, MODE_PRIVATE);
-        boolean hear =sharedPreferences.getBoolean(sharePrefer.SOUND,false);
+        boolean hear =sharedPreferences.getBoolean(sharePrefer.SOUND,true);
         if(hear){
             MediaPlayer ring= MediaPlayer.create(this,R.raw.clickbtn);
             ring.start();

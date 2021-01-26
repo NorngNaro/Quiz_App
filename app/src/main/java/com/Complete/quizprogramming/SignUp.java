@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +37,7 @@ public class SignUp extends AppCompatActivity {
     private ImageButton hide2;
     private Boolean isPressed = false;
     private Boolean isPressed_repass = false;
+    private ProgressBar load;
     SharePrefer sharePrefer = new SharePrefer();
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ref = database.getReference("user");
@@ -54,6 +56,7 @@ public class SignUp extends AppCompatActivity {
         login = (Button) findViewById(R.id.btn_signup);
         hide1 = (ImageButton) findViewById(R.id.hide1);
         hide2 = (ImageButton) findViewById((R.id.hide2));
+        load = findViewById(R.id.progressBar);
 
 
         // Call method
@@ -71,7 +74,7 @@ public class SignUp extends AppCompatActivity {
                 if (netInfo == null){
                     Toast.makeText(SignUp.this, "Please check internet connection!", Toast.LENGTH_LONG).show();
                 }
-
+                load.setVisibility(View.VISIBLE);
                 // call sign in method
                 sign();
 
@@ -102,69 +105,81 @@ public class SignUp extends AppCompatActivity {
         if(txt_username.getText().toString().length()==0){
             txt_username.requestFocus();
             txt_password.setError("Enter Username");
+            load.setVisibility(View.GONE);
         }else if(txt_password.getText().toString().length() != txt_re_password.getText().toString().length()){
+            load.setVisibility(View.GONE);
             txt_password.requestFocus();
             txt_re_password.requestFocus();
             txt_password.setError("Password not match");
             txt_re_password.setError("Password not match");
             Toast.makeText(this, "Password not match", Toast.LENGTH_SHORT).show();
         }else if (txt_password.getText().toString().length() < 4){
+            load.setVisibility(View.GONE);
             txt_password.requestFocus();
             Toast.makeText(this, "Password 4 Digits", Toast.LENGTH_SHORT).show();
         }
         else if(txt_username.getText().toString().length() != 0) {
-            if (txt_password.getText().toString().equals(txt_re_password.getText().toString())) {
 
+            if (txt_password.getText().toString().equals(txt_re_password.getText().toString())) {
 
                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        load.setVisibility(View.GONE);
+
+                        boolean log = true;
 
                         for (DataSnapshot zoneSnapshot : dataSnapshot.getChildren()) {
 
                             String user_name = zoneSnapshot.child("username").getValue(String.class);
 
                             if (txt_username.getText().toString().equals(user_name)) {
-                                Log.e("test", "onDataChange: have something wrong " );
+                                txt_username.requestFocus();
+                                txt_username.setError("Already used!");
                                 Toast.makeText(SignUp.this, "This username already used!", Toast.LENGTH_SHORT).show();
+                                log = false;
                                 break;
-                            }else{
-
-                                String ID = "id_" + txt_username.getText().toString();
-
-                                ref.child(ID).child("username").setValue(txt_username.getText().toString());
-                                ref.child(ID).child("password").setValue(txt_password.getText().toString());
-                                ref.child(ID).child("correctAns").setValue("0");
-                                ref.child(ID).child("incorrectAns").setValue("0");
-                                ref.child(ID).child("totalQuiz").setValue("0");
-                                ref.child(ID).child("totalScore").setValue("0");
-
-                                // For check quiz progress
-                                ref.child(ID).child("program").child("c_program").child("level1").child("completeQuiz").setValue("0");
-                                ref.child(ID).child("program").child("c_program").child("level1").child("correctQuiz").setValue("0");
-                                ref.child(ID).child("program").child("c_program").child("level1").child("levelComplete").setValue("false");
-                                ref.child(ID).child("program").child("c_plus_program").child("level1").child("completeQuiz").setValue("0");
-                                ref.child(ID).child("program").child("c_plus_program").child("level1").child("correctQuiz").setValue("0");
-                                ref.child(ID).child("program").child("c_plus_program").child("level1").child("levelComplete").setValue("false");
-                                ref.child(ID).child("program").child("java_program").child("level1").child("completeQuiz").setValue("0");
-                                ref.child(ID).child("program").child("java_program").child("level1").child("correctQuiz").setValue("0");
-                                ref.child(ID).child("program").child("java_program").child("level1").child("levelComplete").setValue("false");
-
-                                // For check complete level
-                                ref.child(ID).child("program").child("c_program").child("complete_level").setValue("0");
-                                ref.child(ID).child("program").child("c_plus_program").child("complete_level").setValue("0");
-                                ref.child(ID).child("program").child("java_program").child("complete_level").setValue("0");
-
-                                saveData();
-                                Intent i = new Intent(SignUp.this, Home.class);
-                                startActivity(i);
-
-                                Toast.makeText(SignUp.this, "Log in", Toast.LENGTH_SHORT).show();
-
-                                finish();
                             }
-
                         }
+
+                        if(log){
+
+                            saveData();
+                            
+                            String ID = "id_" + txt_username.getText().toString();
+
+                            ref.child(ID).child("username").setValue(txt_username.getText().toString());
+                            ref.child(ID).child("password").setValue(txt_password.getText().toString());
+                            ref.child(ID).child("correctAns").setValue("0");
+                            ref.child(ID).child("incorrectAns").setValue("0");
+                            ref.child(ID).child("totalQuiz").setValue("0");
+                            ref.child(ID).child("totalScore").setValue("0");
+
+                            // For check quiz progress
+                            ref.child(ID).child("program").child("c_program").child("level1").child("completeQuiz").setValue("0");
+                            ref.child(ID).child("program").child("c_program").child("level1").child("correctQuiz").setValue("0");
+                            ref.child(ID).child("program").child("c_program").child("level1").child("levelComplete").setValue("false");
+                            ref.child(ID).child("program").child("c_plus_program").child("level1").child("completeQuiz").setValue("0");
+                            ref.child(ID).child("program").child("c_plus_program").child("level1").child("correctQuiz").setValue("0");
+                            ref.child(ID).child("program").child("c_plus_program").child("level1").child("levelComplete").setValue("false");
+                            ref.child(ID).child("program").child("java_program").child("level1").child("completeQuiz").setValue("0");
+                            ref.child(ID).child("program").child("java_program").child("level1").child("correctQuiz").setValue("0");
+                            ref.child(ID).child("program").child("java_program").child("level1").child("levelComplete").setValue("false");
+
+                            // For check complete level
+                            ref.child(ID).child("program").child("c_program").child("complete_level").setValue("0");
+                            ref.child(ID).child("program").child("c_plus_program").child("complete_level").setValue("0");
+                            ref.child(ID).child("program").child("java_program").child("complete_level").setValue("0");
+
+                            Intent i = new Intent(SignUp.this, Home.class);
+                            startActivity(i);
+
+                            Toast.makeText(SignUp.this, "Log in", Toast.LENGTH_SHORT).show();
+
+                            finish();
+                        }
+
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {

@@ -102,7 +102,7 @@ public class Setting extends AppCompatActivity {
 
     private void show_sound(){
         SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO, MODE_PRIVATE);
-        boolean set =sharedPreferences.getBoolean(sharePrefer.SOUND,false);
+        boolean set =sharedPreferences.getBoolean(sharePrefer.SOUND,true);
         if(set){
             binding.switchSound.setChecked(true);
         }else {
@@ -111,7 +111,7 @@ public class Setting extends AppCompatActivity {
     }
     private void show_music(){
         SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO, MODE_PRIVATE);
-        boolean set =sharedPreferences.getBoolean(sharePrefer.MUSIC,false);
+        boolean set =sharedPreferences.getBoolean(sharePrefer.MUSIC,true);
         if(set){
             binding.switchMusic.setChecked(true);
         }else {
@@ -120,7 +120,7 @@ public class Setting extends AppCompatActivity {
     }
     private void show_vibrate(){
         SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO, MODE_PRIVATE);
-        boolean set =sharedPreferences.getBoolean(sharePrefer.VIBRATE,false);
+        boolean set =sharedPreferences.getBoolean(sharePrefer.VIBRATE,true);
         if(set){
             binding.switchVibrate.setChecked(true);
         }else {
@@ -131,7 +131,7 @@ public class Setting extends AppCompatActivity {
 
     public void btn_click(){
         SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO, MODE_PRIVATE);
-        boolean hear =sharedPreferences.getBoolean(sharePrefer.SOUND,false);
+        boolean hear =sharedPreferences.getBoolean(sharePrefer.SOUND,true);
         if(hear){
             MediaPlayer ring= MediaPlayer.create(this,R.raw.clickbtn);
             ring.start();

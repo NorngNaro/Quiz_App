@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
                 process.setProgress(100);
                 SharePrefer sharePrefer = new SharePrefer();
                 SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO,MODE_PRIVATE);
-                boolean log =sharedPreferences.getBoolean(sharePrefer.IN_OUT,false);
+                boolean log =sharedPreferences.getBoolean(sharePrefer.IN_OUT,true);
                 if( log == false){
                     Intent intent = new Intent(MainActivity.this, SignIn.class);
                     startActivity(intent);

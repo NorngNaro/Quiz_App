@@ -93,7 +93,7 @@ public class Profile extends AppCompatActivity {
 
     private void btn(){
         SharedPreferences sharedPreferences = getSharedPreferences(sharePrefer.USER_INFO, MODE_PRIVATE);
-        boolean hear =sharedPreferences.getBoolean(sharePrefer.SOUND,false);
+        boolean hear =sharedPreferences.getBoolean(sharePrefer.SOUND,true);
         if(hear){
             MediaPlayer ring= MediaPlayer.create(this,R.raw.clickbtn);
             ring.start();

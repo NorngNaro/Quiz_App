@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.database.DataSnapshot;
@@ -33,6 +34,7 @@ public class SignIn extends AppCompatActivity {
     private Boolean isPressed = false;
     private String pass_word="";
     private String user_name="";
+    private ProgressBar load;
     SharePrefer sharePrefer = new SharePrefer();
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -47,6 +49,7 @@ public class SignIn extends AppCompatActivity {
         btnlogin = (Button) findViewById(R.id.btn_login);
         hidepassword = (ImageButton) findViewById(R.id.hide);
         create_account = (TextView) findViewById(R.id.create);
+        load = findViewById(R.id.progressBar);
 
 
         // call method
@@ -58,6 +61,8 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                load.setVisibility(View.VISIBLE);
+
                 internet();
 
                 // For query data from database
@@ -65,6 +70,10 @@ public class SignIn extends AppCompatActivity {
                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        boolean log = false;
+
+                        load.setVisibility(View.GONE);
 
                         // For check login or logout using share Preference
 
@@ -82,27 +91,35 @@ public class SignIn extends AppCompatActivity {
                                 user_name = zoneSnapshot.child("username").getValue(String.class);
                                 pass_word = zoneSnapshot.child("password").getValue(String.class);
 
-
                                 if (username.getText().toString().equals(user_name)) {
+                                    log=true;
                                     break;
+                                }else{
+                                    log=false;
                                 }
                             }
-                            if (password.getText().toString().equals(pass_word)) {
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString( "username", username.getText().toString());
-                                editor.putString( "password", password.getText().toString());
-                                editor.putBoolean("in_out",true);
-                                editor.apply();
+                            if(log){
+                                if (password.getText().toString().equals(pass_word)) {
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString( "username", username.getText().toString());
+                                    editor.putString( "password", password.getText().toString());
+                                    editor.putBoolean("in_out",true);
+                                    editor.apply();
 
-                                Intent i = new Intent(SignIn.this , Home.class);
-                                startActivity(i);
+                                    Intent i = new Intent(SignIn.this , Home.class);
+                                    startActivity(i);
 
-                                Toast.makeText(SignIn.this, "Log in", Toast.LENGTH_SHORT).show();
-                                
-                                finish();
-                            } else {
-                                password.setError("Wrong Password");
-                                password.requestFocus();
+                                    Toast.makeText(SignIn.this, "Log in", Toast.LENGTH_SHORT).show();
+
+                                    finish();
+                                } else {
+                                    password.setError("Wrong Password");
+                                    password.requestFocus();
+                                }
+                            }else {
+                                username.setError("Username not registered!");
+                                username.requestFocus();
+                                Toast.makeText(SignIn.this, "Sign Up to continue", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
