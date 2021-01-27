@@ -426,7 +426,7 @@ public class Quiz extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 binding.progressBar.setVisibility(View.GONE);
-                right_ans = String.valueOf(dataSnapshot.child("quiz"+quiz_range).child("right_ans").getValue(Long.class));
+                right_ans = dataSnapshot.child("quiz"+quiz_range).child("right_ans").getValue(String.class);
                 binding.txtQuiz.setText(dataSnapshot.child("quiz"+quiz_range).child("quiz").getValue(String.class));
                 binding.txtAns1.setText(dataSnapshot.child("quiz"+quiz_range).child("wrong_ans1").getValue(String.class));
                 binding.txtAns2.setText(dataSnapshot.child("quiz"+quiz_range).child("wrong_ans2").getValue(String.class));
@@ -446,8 +446,8 @@ public class Quiz extends AppCompatActivity {
 
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    ref.child("completeQuiz").setValue("0");
-                    ref.child("correctQuiz").setValue("0");
+                    ref.child("completeQuiz").setValue(0);
+                    ref.child("correctQuiz").setValue(0);
                 }
 
                 @Override
