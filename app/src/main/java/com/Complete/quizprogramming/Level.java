@@ -1,5 +1,6 @@
 package com.Complete.quizprogramming;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -219,6 +221,7 @@ public class Level extends AppCompatActivity {
         // Query to database
         DatabaseReference ref = database.getReference("user").child(id);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -228,12 +231,12 @@ public class Level extends AppCompatActivity {
                 program_click =  getIntent().getSerializableExtra("click").toString();
 
                 // Get value of level that have completed
-                int block_level = Integer.parseInt(dataSnapshot.child("program").child(program_click).child("complete_level").getValue(String.class));
+                int block_level =Integer.valueOf(Math.toIntExact(dataSnapshot.child("program").child(program_click).child("complete_level").getValue(Long.class)));
 
                 // Loop for lock level
                 for( int i = 1 ; i <= block_level + 1 ; i++ ){
 
-                    int progress = Integer.parseInt(dataSnapshot.child("program").child(program_click).child("level"+i).child("completeQuiz").getValue(String.class));
+                    int progress = Integer.valueOf(Math.toIntExact(dataSnapshot.child("program").child(program_click).child("level" + i).child("completeQuiz").getValue(Long.class)));
 
                     if(i==1){
                         binding.imageLevel1.setImageResource(R.drawable.ic_baseline_lock_open_24);
@@ -386,8 +389,9 @@ public class Level extends AppCompatActivity {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private int result(DataSnapshot dataSnapshot , int i , int progress){
-        int result = (Integer.parseInt(dataSnapshot.child("program").child(program_click).child("level"+i).child("correctQuiz").getValue(String.class))*100)/
+        int result = (Integer.valueOf(Math.toIntExact(dataSnapshot.child("program").child(program_click).child("level" + i).child("correctQuiz").getValue(Long.class)))*100)/
                 progress;
         return result;
     }
@@ -400,6 +404,5 @@ public class Level extends AppCompatActivity {
             ring.start();
         }
     }
-
 
     }

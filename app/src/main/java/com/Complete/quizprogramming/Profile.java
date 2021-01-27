@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -59,14 +60,15 @@ public class Profile extends AppCompatActivity {
 
                 binding.progressBar.setVisibility(View.GONE);
 
+
                     // Set text to view
-                    binding.txtCorrectAn.setText(dataSnapshot.child("correctAns").getValue(String.class));
-                    binding.txtIncorrectAns.setText(dataSnapshot.child("incorrectAns").getValue(String.class));
-                    binding.txtTotalQuestion.setText(dataSnapshot.child("totalQuiz").getValue(String.class));
-                    binding.txtTotalScore.setText(dataSnapshot.child("totalScore").getValue(String.class));
-                    binding.cProgramLevel.setText(dataSnapshot.child("program").child("c_program").child("complete_level").getValue(String.class));
-                    binding.cPlusProgramLevel.setText(dataSnapshot.child("program").child("c_plus_program").child("complete_level").getValue(String.class));
-                    binding.javaLevel.setText(dataSnapshot.child("program").child("java_program").child("complete_level").getValue(String.class));
+                    binding.txtCorrectAn.setText(String.valueOf(dataSnapshot.child("correctAns").getValue(Long.class)));
+                    binding.txtIncorrectAns.setText(String.valueOf(dataSnapshot.child("incorrectAns").getValue(Long.class)));
+                    binding.txtTotalQuestion.setText(String.valueOf(dataSnapshot.child("totalQuiz").getValue(Long.class)));
+                    binding.txtTotalScore.setText(String.valueOf(dataSnapshot.child("totalScore").getValue(Long.class)));
+                    binding.cProgramLevel.setText(String.valueOf(dataSnapshot.child("program").child("c_program").child("complete_level").getValue(Long.class)));
+                    binding.cPlusProgramLevel.setText(String.valueOf(dataSnapshot.child("program").child("c_plus_program").child("complete_level").getValue(Long.class)));
+                    binding.javaLevel.setText(String.valueOf(dataSnapshot.child("program").child("java_program").child("complete_level").getValue(Long.class)));
 
             }
             @Override

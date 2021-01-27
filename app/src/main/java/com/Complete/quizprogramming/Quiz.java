@@ -1,6 +1,7 @@
 package com.Complete.quizprogramming;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.cardview.widget.CardView;
@@ -14,6 +15,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
@@ -242,14 +244,14 @@ public class Quiz extends AppCompatActivity {
     private void next_level(){
         if(retryPlay.equals("false")){
             final int num_level = 1 + Integer.parseInt(String.valueOf(level.charAt(level.length()-1)));
-            final String complete_level = String.valueOf(com_level + 1);
+            final int complete_level = com_level + 1;
             final DatabaseReference ref = database.getReference("user").child(id);
             ref.addListenerForSingleValueEvent(new ValueEventListener() {
 
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    ref.child("program").child(program).child("level"+num_level).child("completeQuiz").setValue("0");
-                    ref.child("program").child(program).child("level"+num_level).child("correctQuiz").setValue("0");
+                    ref.child("program").child(program).child("level"+num_level).child("completeQuiz").setValue(0);
+                    ref.child("program").child(program).child("level"+num_level).child("correctQuiz").setValue(0);
                     ref.child("program").child(program).child("level"+num_level).child("levelComplete").setValue("false");
                     ref.child("program").child(program).child(level).child("levelComplete").setValue("true");
                     ref.child("program").child(program).child("complete_level").setValue(complete_level);
@@ -329,17 +331,18 @@ public class Quiz extends AppCompatActivity {
 
         Query ref = database.getReference("user").child(id);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                quiz_range = Integer.parseInt(dataSnapshot.child("program").child(program).child(level).child("completeQuiz").getValue(String.class)) + 1;
-                correctQuiz = Integer.parseInt(dataSnapshot.child("program").child(program).child(level).child("correctQuiz").getValue(String.class));
+                quiz_range = Integer.valueOf(Math.toIntExact(dataSnapshot.child("program").child(program).child(level).child("completeQuiz").getValue(Long.class))) + 1;
+                correctQuiz = Integer.valueOf(Math.toIntExact(dataSnapshot.child("program").child(program).child(level).child("correctQuiz").getValue(Long.class)));
                 binding.txtCountQuiz.setText(quiz_range + "/10");
-                score = Integer.parseInt(dataSnapshot.child("totalScore").getValue(String.class));
+                score = Integer.valueOf(Math.toIntExact(dataSnapshot.child("totalScore").getValue(Long.class)));
                 binding.txtTime.setText("Score: " + score);
-                incorrect = Integer.parseInt(dataSnapshot.child("incorrectAns").getValue(String.class));
-                correct = Integer.parseInt(dataSnapshot.child("correctAns").getValue(String.class));
-                totalQuiz = Integer.parseInt(dataSnapshot.child("totalQuiz").getValue(String.class));
-                com_level = Integer.parseInt(dataSnapshot.child("program").child(program).child("complete_level").getValue(String.class));
+                incorrect = Integer.valueOf(Math.toIntExact(dataSnapshot.child("incorrectAns").getValue(Long.class)));
+                correct = Integer.valueOf(Math.toIntExact(dataSnapshot.child("correctAns").getValue(Long.class)));
+                totalQuiz = Integer.valueOf(Math.toIntExact(dataSnapshot.child("totalQuiz").getValue(Long.class)));
+                com_level = Integer.valueOf(Math.toIntExact(dataSnapshot.child("program").child(program).child("complete_level").getValue(Long.class)));
                 retryPlay = dataSnapshot.child("program").child(program).child(level).child("levelComplete").getValue(String.class);
 
                 // for retry level play
@@ -376,50 +379,44 @@ public class Quiz extends AppCompatActivity {
         score ++;
         sum_correct();
         binding.txtTime.setText("Score: "+score);
-        String addScore = String.valueOf(score);
         DatabaseReference ref = database.getReference("user").child(id);
-        ref.child("totalScore").setValue(addScore);
+        ref.child("totalScore").setValue(score);
     }
 
     // For sum quiz
     private void sum_quiz() {
-        String addQuiz = String.valueOf(quiz_range);
         binding.txtCountQuiz.setText(quiz_range+"/10");
         DatabaseReference ref = database.getReference("user").child(id).child("program").child(program);
-        ref.child(level).child("completeQuiz").setValue(addQuiz);
+        ref.child(level).child("completeQuiz").setValue(quiz_range);
     }
 
     // For sum incorrect
     private void sum_incorrect() {
         incorrect++;
-        String add_incorrect = String.valueOf(incorrect);
         DatabaseReference ref = database.getReference("user").child(id);
-        ref.child("incorrectAns").setValue(add_incorrect);
+        ref.child("incorrectAns").setValue(incorrect);
     }
 
     // For sum correct
     private void sum_correct() {
         sum_correctLevel();
         correct++;
-        String add_correct = String.valueOf(correct);
         DatabaseReference ref = database.getReference("user").child(id);
-        ref.child("correctAns").setValue(add_correct);
+        ref.child("correctAns").setValue(correct);
     }
 
     // For sum total Quiz
     private void sum_total_quiz() {
         totalQuiz++;
-        String add_totalQuiz = String.valueOf(totalQuiz);
         DatabaseReference ref = database.getReference("user").child(id);
-        ref.child("totalQuiz").setValue(add_totalQuiz);
+        ref.child("totalQuiz").setValue(totalQuiz);
     }
 
     // For sum correct in a level
     private void sum_correctLevel() {
         correctQuiz++;
-        String add_correctLevel = String.valueOf(correctQuiz);
         DatabaseReference ref = database.getReference("user").child(id).child("program").child(program);
-        ref.child(level).child("correctQuiz").setValue(add_correctLevel);
+        ref.child(level).child("correctQuiz").setValue(correctQuiz);
     }
 
     // Get data from database and set to view

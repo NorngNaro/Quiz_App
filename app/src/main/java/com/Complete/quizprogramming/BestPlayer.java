@@ -1,10 +1,12 @@
 package com.Complete.quizprogramming;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -51,6 +53,7 @@ public class BestPlayer extends AppCompatActivity {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
 
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -58,7 +61,7 @@ public class BestPlayer extends AppCompatActivity {
 
                 for (DataSnapshot zoneSnapshot: dataSnapshot.getChildren()) {
                     String username = zoneSnapshot.child("username").getValue(String.class);
-                    String score = zoneSnapshot.child("totalScore").getValue(String.class);
+                    String score = String.valueOf(Math.toIntExact(zoneSnapshot.child("totalScore").getValue(Long.class)));
                     Log.e("score","" +i+zoneSnapshot.child("username").getValue(String.class) );
 
                     if(i==0){

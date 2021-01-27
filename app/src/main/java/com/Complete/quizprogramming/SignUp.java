@@ -151,26 +151,26 @@ public class SignUp extends AppCompatActivity {
 
                             ref.child(ID).child("username").setValue(txt_username.getText().toString());
                             ref.child(ID).child("password").setValue(txt_password.getText().toString());
-                            ref.child(ID).child("correctAns").setValue("0");
-                            ref.child(ID).child("incorrectAns").setValue("0");
-                            ref.child(ID).child("totalQuiz").setValue("0");
-                            ref.child(ID).child("totalScore").setValue("0");
+                            ref.child(ID).child("correctAns").setValue(0);
+                            ref.child(ID).child("incorrectAns").setValue(0);
+                            ref.child(ID).child("totalQuiz").setValue(0);
+                            ref.child(ID).child("totalScore").setValue(0);
 
                             // For check quiz progress
-                            ref.child(ID).child("program").child("c_program").child("level1").child("completeQuiz").setValue("0");
-                            ref.child(ID).child("program").child("c_program").child("level1").child("correctQuiz").setValue("0");
+                            ref.child(ID).child("program").child("c_program").child("level1").child("completeQuiz").setValue(0);
+                            ref.child(ID).child("program").child("c_program").child("level1").child("correctQuiz").setValue(0);
                             ref.child(ID).child("program").child("c_program").child("level1").child("levelComplete").setValue("false");
-                            ref.child(ID).child("program").child("c_plus_program").child("level1").child("completeQuiz").setValue("0");
-                            ref.child(ID).child("program").child("c_plus_program").child("level1").child("correctQuiz").setValue("0");
+                            ref.child(ID).child("program").child("c_plus_program").child("level1").child("completeQuiz").setValue(0);
+                            ref.child(ID).child("program").child("c_plus_program").child("level1").child("correctQuiz").setValue(0);
                             ref.child(ID).child("program").child("c_plus_program").child("level1").child("levelComplete").setValue("false");
-                            ref.child(ID).child("program").child("java_program").child("level1").child("completeQuiz").setValue("0");
-                            ref.child(ID).child("program").child("java_program").child("level1").child("correctQuiz").setValue("0");
+                            ref.child(ID).child("program").child("java_program").child("level1").child("completeQuiz").setValue(0);
+                            ref.child(ID).child("program").child("java_program").child("level1").child("correctQuiz").setValue(0);
                             ref.child(ID).child("program").child("java_program").child("level1").child("levelComplete").setValue("false");
 
                             // For check complete level
-                            ref.child(ID).child("program").child("c_program").child("complete_level").setValue("0");
-                            ref.child(ID).child("program").child("c_plus_program").child("complete_level").setValue("0");
-                            ref.child(ID).child("program").child("java_program").child("complete_level").setValue("0");
+                            ref.child(ID).child("program").child("c_program").child("complete_level").setValue(0);
+                            ref.child(ID).child("program").child("c_plus_program").child("complete_level").setValue(0);
+                            ref.child(ID).child("program").child("java_program").child("complete_level").setValue(0);
 
                             Intent i = new Intent(SignUp.this, Home.class);
                             startActivity(i);
